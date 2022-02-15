@@ -1,2 +1,2 @@
-# Group10-WorldCovid-DashPython
+# group10-worldcovid-dashpython
 World covid data python dashboard
