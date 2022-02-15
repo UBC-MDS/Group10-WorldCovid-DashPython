@@ -25,7 +25,4 @@ Within reason, we are all available to work & meet outside of lecture/lab time. 
 We’ve decided to have no formal “breach of contract” rules. Any time someone feels that they won’t be able to submit their work by Friday, they should notify the group by Friday at 10am at the latest. We can then decide as a team what to do. We will either re-distribute the work or push our review meeting later in the day (or to Saturday as a last resort). 
 
 **Group members agreeing to the terms of this contract:**
-Adam Morphy
-Kingslin Lv
-Thomas Siu
-Kristin Bunyan
+Adam Morphy, Kingslin Lv, Thomas Siu, and Kristin Bunyan
