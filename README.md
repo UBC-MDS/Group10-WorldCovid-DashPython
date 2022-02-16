@@ -30,5 +30,5 @@ We welcome and recognize all contributions. Please find the guide for contributi
 
 ## References
 
--   COVID-19 Data Repository by [Our World Data]<https://ourworldindata.org/coronavirus> at University of Oxford. This data has been collected, aggregated, and documented by Cameron Appel, Diana Beltekian, Daniel Gavrilov, Charlie Giattino, Joe Hasell, Bobbie Macdonald, Edouard Mathieu, Esteban Ortiz-Ospina, Hannah Ritchie, Lucas Rodés-Guirao, and Max Roser.
+COVID-19 Data Repository by [Our World Data]<https://ourworldindata.org/coronavirus> at University of Oxford. This data has been collected, aggregated, and documented by Cameron Appel, Diana Beltekian, Daniel Gavrilov, Charlie Giattino, Joe Hasell, Bobbie Macdonald, Edouard Mathieu, Esteban Ortiz-Ospina, Hannah Ritchie, Lucas Rodés-Guirao, and Max Roser.
 
