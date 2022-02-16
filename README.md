@@ -1,4 +1,4 @@
-# World COVID-19 Dashboard (Python Dash)
+# World COVID-19 Dashboard (Python)
 
 ## Overview
 
