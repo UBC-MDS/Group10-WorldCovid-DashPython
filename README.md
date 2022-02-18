@@ -6,6 +6,8 @@ The World COVID-19 Dashboard is an interactive app that allows users to explore 
 
 Our app is middled by a world map for COVID-19 numbers; on the left side of the dashboard, the user can view confirmed cases, number of deaths and vaccinations for selected countries in the filter; on the right side of the dashboard, the statistics for selected countries are visually presented in line charts with a filter for daily, weekly, monthly, and yearly data presentation.
 
+The deatiled proposal can be found [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython/blob/main/docs/proposal.md)
+
 The complete COVID-19 dataset used in our dashboard can be downloaded in [CSV](https://covid.ourworldindata.org/data/owid-covid-data.csv) | [XLSX](https://covid.ourworldindata.org/data/owid-covid-data.xlsx) | [JSON](https://covid.ourworldindata.org/data/owid-covid-data.json) and this is a collection of the COVID-19 data maintained by [_Our World in Data_](https://ourworldindata.org/coronavirus).
 
 ## Dashboard Design
