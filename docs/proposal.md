@@ -44,5 +44,5 @@ When Mary logs on to the “World COVID-19 dashboard”, she will see an overvie
 
 She hypothesizes that lower income countries have higher case counts and lower vaccines, and decides to conduct additional research into the identified countries that have higher cases of COVID-19.
 
-Mary may also see that countries with higher vaccine rates experience lower COVID-19 cases per captia, but only for a limited period of time. She hypothesizes that the vaccine rollout has a significant effect on hospitalization and ICU admissions, and decides to use additional data and analysis to gain statistical evidence on how long vaccines can be expected to influence hospitalization rates. The results from which may inform public health timelines for covid measures, as well as recommendations of additional vaccines doses.
+Mary may also see that countries with higher vaccine rates experience lower COVID-19 cases per capita, but only for a limited period of time. She hypothesizes that the vaccine rollout has a significant effect on hospitalization and ICU admissions, and decides to use additional data and analysis to gain statistical evidence on how long vaccines can be expected to influence hospitalization rates. The results from which may inform public health timelines for covid measures, as well as recommendations of additional vaccines doses.
 
