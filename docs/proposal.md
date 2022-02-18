@@ -30,7 +30,7 @@ By default, our app will show the above statistics of Canada against other count
 |-------|----|-----------|------------|------------------|----------------|
 |Canada|2022-02-01|3066278|34032|1167|30182561|
 |Japan|2022-02-01|2820053|18882|22653|99824114|
-|United Kingdom|2022-01|17470395|157005|502|48467140|
+|United Kingdom|2022-02-01|17470395|157005|502|48467140|
 
 **Table 1: Sample of the features in dataset**
 
