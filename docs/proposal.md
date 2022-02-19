@@ -10,7 +10,7 @@ The COVID-19 pandemic has greatly impacted the lives of all Canadians. Almost ov
 
 If we could compare Canada to its global counterparts using daily COVID-19 statistics, we could obtain a better understanding of Canada's relative successes in its handling of the pandemic. To address this challenge, our group proposes building a data visualization app that would allow Canadian public health communicators and officials to assess the impact of current policy, and also inform future policy decisions by visually exploring Canada's COVID-19 indicators relative to other nations.
  
-Our app will show features such as case counts, number of deaths, number of hospitalizations, and number of people fully vaccinated, and allow users to explore different aspects of this data by filtering for country, continent, and time frame. Our app will also allow users to decide which scale they would like to view the data on, such as logarithmic. We feel that these tools will be an effective way to compare COVID-19 indicators across nations.
+Our app will show features such as case counts, number of deaths, number of hospitalizations, and number of people fully vaccinated, and allow users to explore different aspects of this data by filtering for country, and time frame. Our app will also allow users to decide which scale they would like to view the data on, such as logarithmic, and also what level of data they would like to observe; daily, weekly or monthly. We feel that these tools will be an effective way to compare COVID-19 indicators across nations.
 
 
 ## Description of the data
