@@ -2,9 +2,13 @@
 
 ## Overview
 
-The World COVID-19 Dashboard is an interactive app that allows users to explore COVID-19 confirmed cases, deaths, hospitalization rates, and vaccination numbers around the world. The data is presented in the format of linear and logarithmic scales for purpose of illustrating trends over different time periods. The intent of this app is for users to quickly learn the current pandemic situation as COVID-19 spreads from country to country across the world. While we adapt to live with COVID-19 and escape from the pandemic, and our dashboard can clearly show you COVID-19 data summaries and vaccination numbers. 
+The World COVID-19 Dashboard is an interactive app that allows users to explore global COVID-19 indicators The intent of this app is for users to quickly observe and understand the current state of the pandemic situation as globally, and compare different metrics across different countries. As we all adjust to living with COVID-19, our dashboard serves as a tool that can clearly demonstrate the movement of the pandemic over time through data summaries and visualizations. 
 
-Our app is middled by a world map for COVID-19 numbers; on the left side of the dashboard, the user can view confirmed cases, number of deaths and vaccinations for selected countries in the filter; on the right side of the dashboard, the statistics for selected countries are visually presented in line charts with a filter for daily, weekly, and monthly data presentation.
+Design (sketch pictured below): 
+- Our app is centered by a world map showing the number of new COVID-19 cases by country. 
+- The left-hand side of the dashboard contains the user's main feature filters. There, the user can select up to two of the following features for the line chart visualizations on the right of the map: total_cases, new_cases, total_deaths, new_deaths, hosp_patients (hospitalized patients), icu_patients, people_vaccinated, and people_fully_vaccinated. 
+- As mentioned above, the right-hand side of the dashboard, displays two line chart visualizations based on the features selected by the user.
+- The top of the app contains the main data filters. The user can filter for logarithmic or linear data, as well as choose the level of granularity they wish to explore: daily, monthly, or weekly. This also contains our date-time slider, that allows the user to filter for a particular time period they would like to see.
 
 The deatiled proposal can be found [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython/blob/main/docs/proposal.md)
 
