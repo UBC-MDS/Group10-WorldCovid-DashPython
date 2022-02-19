@@ -6,7 +6,7 @@ The World COVID-19 Dashboard is an interactive app that allows users to explore 
 
 Design (sketch pictured below): 
 - Our app is centered by a world map showing the number of new COVID-19 cases by country. 
-- The left-hand side of the dashboard contains the user's main feature filters. There, the user can select up to two of the following features for the line chart visualizations on the right of the map: total_cases, new_cases, total_deaths, new_deaths, hosp_patients (hospitalized patients), icu_patients, people_vaccinated, and people_fully_vaccinated. 
+- The left-hand side of the dashboard contains the user's main feature filters. There, the user can select up to two features for the line chart visualizations on the right of the map, features like: Confirmed Cases, Deaths, Hospitalizations, ICU's (number of patients in the ICU), Recoveries, and Vaccination Numbers etc. 
 - As mentioned above, the right-hand side of the dashboard, displays two line chart visualizations based on the features selected by the user.
 - The top of the app contains the main data filters. The user can filter for logarithmic or linear data, as well as choose the level of granularity they wish to explore: daily, monthly, or weekly. This also contains our date-time slider, that allows the user to filter for a particular time period they would like to see.
 
