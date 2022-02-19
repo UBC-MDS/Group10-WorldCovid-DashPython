@@ -5,9 +5,11 @@
 The World COVID-19 Dashboard is an interactive app that allows users to explore global COVID-19 indicators. The intent of this app is for users to quickly observe and understand the current state of the pandemic situation globally, and compare different metrics across different countries. As we all adjust to living with COVID-19, our dashboard serves as a tool that can clearly demonstrate the movement of the pandemic over time through data summaries and visualizations.
 
 Design:
+
 Our app is centred by a world map showing covid indicators across the globe. The left-hand side of the dashboard contains the main variable filters that users can select to visually present the data across different countries in the world. There are two filters here:
   - the line chart filter, where the user can select two variables for the line chart visualizations on the right of the dashboard, variables like: Confirmed Cases, Deaths, Hospitalizations, ICU's (number of patients in the ICU), Recoveries, and Vaccination Numbers etc.
   - the country filter, where the user can select which country's data they would like displayed
+
 The top of the app contains our date-time slider, that allows the user to filter for a particular time period they would like to see, the map filter (the blue filter), which controls which feature is showcased in the centre map, and our two data filters:
   - a logarithmic or linear data filter
   - a filter for the level of granularity: daily, monthly, or weekly
