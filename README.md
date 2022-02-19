@@ -19,7 +19,7 @@ The complete COVID-19 dataset used in our dashboard can be downloaded in [CSV](h
 
 ## Dashboard Design
 
-![](dashboard_design.png)
+![](dashboad_sketch.png)
 
 ## License
 
