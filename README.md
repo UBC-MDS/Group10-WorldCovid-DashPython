@@ -7,11 +7,11 @@ The World COVID-19 Dashboard is an interactive app that allows users to explore 
 Design:
 
 Our app is centred by a world map showing covid indicators across the globe. The left-hand side of the dashboard contains the main variable filters that users can select to visually present the data across different countries in the world. There are two filters here:
-  - the line chart filter, where the user can select two variables for the line chart visualizations on the right of the dashboard, variables like: Confirmed Cases, Deaths, Hospitalizations, ICU's (number of patients in the ICU), Recoveries, and Vaccination Numbers etc.
+  - the line chart filter, where the user can select two variables for the line chart visualizations on the right of the dashboard, variables like: Confirmed Cases, Deaths, Hospitalizations, ICU's (number of patients in the ICU), Recoveries, and Vaccination Numbers etc; and
   - the country filter, where the user can select which country's data they would like displayed
 
 The top of the app contains our date-time slider, that allows the user to filter for a particular time period they would like to see, the map filter (the blue filter), which controls which feature is showcased in the centre map, and our two data filters:
-  - a logarithmic or linear data filter
+  - a logarithmic or linear data filter; and
   - a filter for the level of granularity: daily, monthly, or weekly
 
 The deatiled proposal can be found [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython/blob/main/docs/proposal.md)
