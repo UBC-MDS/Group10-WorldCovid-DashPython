@@ -2,7 +2,7 @@
 
 ## Overview
 
-The World COVID-19 Dashboard is an interactive app that allows users to explore global COVID-19 indicators. The intent of this app is for users to quickly observe and understand the current state of the pandemic situation as globally, and compare different metrics across different countries. As we all adjust to living with COVID-19, our dashboard serves as a tool that can clearly demonstrate the movement of the pandemic over time through data summaries and visualizations.
+The World COVID-19 Dashboard is an interactive app that allows users to explore global COVID-19 indicators. The intent of this app is for users to quickly observe and understand the current state of the pandemic situation globally, and compare different metrics across different countries. As we all adjust to living with COVID-19, our dashboard serves as a tool that can clearly demonstrate the movement of the pandemic over time through data summaries and visualizations.
 
 Design:
 Our app is centred by a world map showing covid indicators across the globe. The left-hand side of the dashboard contains the main variable filters that users can select to visually present the data across different countries in the world. There are two filters here:
