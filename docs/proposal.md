@@ -44,3 +44,4 @@ Research questions may also consider how vaccine rates have influenced hospitali
 
 Mary may see that countries with higher vaccine rates experience lower COVID-19 cases per capita, but only for a limited period of time. She hypothesizes that the vaccine rollout has a significant effect on hospitalization and ICU admissions, and decides to use additional data and analysis to gain statistical evidence on how long vaccines can be expected to influence hospitalization rates. The results from which may inform public health timelines for covid measures.
 
+Our design and description of the World COVID-19 dashboard can be read more in [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython)
