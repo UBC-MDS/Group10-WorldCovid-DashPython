@@ -57,6 +57,7 @@ app.layout = html.Div(
             options=[{"label": col, "value": col} for col in df.columns],
         ),
         html.Br(),
+        html.H4("Country selector"),
         dcc.Dropdown(
             id="country_select",
             multi=True,
