@@ -28,7 +28,7 @@ for key, item in marks.items():
 
 marks_display.update({last_index: marks.get(last_index)})
 
-# Setup app and layout/frontend
+# Setup app and layout/ frontend
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 server = app.server

@@ -81,7 +81,7 @@ def filter_data(df, date_from=None, date_to=None, countries=None):
     Returns
     -------
     pandas.DataFrame
-        Pandas dataframe of the selected covid data.
+        Pandas dataframe of the selected covid data .
 
     Examples
     --------
