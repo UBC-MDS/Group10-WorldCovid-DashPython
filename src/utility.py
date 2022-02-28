@@ -90,6 +90,8 @@ def filter_data(df, date_from=None, date_to=None, countries=None):
                 location=["Canada", "United States"])
     """
 
+    query = "@date_from <= date <= @date_to"
+
     if date_from is None:
         date_from = df["date"].min()
 
@@ -104,7 +106,9 @@ def filter_data(df, date_from=None, date_to=None, countries=None):
             "United Kingdom",
             "Singapore",
         ]
+    elif "all" not in countries:
+        query += " and location in @countries"
 
-    df = df.query("@date_from <= date <= @date_to and location in @countries")
+    df = df.query(query)
 
     return df.copy()

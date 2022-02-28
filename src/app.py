@@ -5,6 +5,8 @@ import altair as alt
 import datetime
 import pandas as pd
 from utility import get_data, filter_data
+import plotly.graph_objects as go
+import plotly_express as px
 
 alt.data_transformers.disable_max_rows()
 
@@ -36,9 +38,11 @@ server = app.server
 app.layout = html.Div(
     [
         html.Iframe(
-            id="scatter",
+            id="line_plot",
             style={"border-width": "0", "width": "100%", "height": "400px"},
         ),
+        html.Br(),
+        dcc.Graph(id="map_plot", figure={}, style={"height": "50vh"}),
         html.Br(),
         html.H4("Data scale"),
         dcc.RadioItems(
@@ -84,9 +88,9 @@ app.layout = html.Div(
     ]
 )
 
-# Set up callbacks/backend
+# line plot sample
 @app.callback(
-    Output("scatter", "srcDoc"),
+    Output("line_plot", "srcDoc"),
     [
         Input("feature_dropdown", "value"),
         Input("country_select", "value"),
@@ -94,7 +98,7 @@ app.layout = html.Div(
         Input("scale_radio", "value"),
     ],
 )
-def plot_altair(ycol, countries, daterange, scale):
+def plot_line(ycol, countries, daterange, scale):
 
     if daterange is None:
         daterange.append(0)
@@ -108,6 +112,8 @@ def plot_altair(ycol, countries, daterange, scale):
     )
 
     filter_df["count"] = filter_df[ycol]
+
+    click = alt.selection_multi(fields=["location"], bind="legend")
 
     chart = (
         alt.Chart(filter_df)
@@ -124,12 +130,63 @@ def plot_altair(ycol, countries, daterange, scale):
                 title=ycol,
             ),
             x="date",
-            tooltip=[ycol],
-            color=alt.Color("location", scale=alt.Scale(scheme="dark2")),
+            tooltip=["location", alt.Tooltip(ycol, title="count")],
+            color=alt.Color("location"),
+            opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
+        .add_selection(click)
         .interactive()
     )
     return chart.to_html()
+
+
+# line plot sample
+@app.callback(
+    Output("map_plot", "figure"),
+    [
+        Input("feature_dropdown", "value"),
+        Input("country_select", "value"),
+        Input("date_slider", "value"),
+        Input("scale_radio", "value"),
+    ],
+)
+def plot_map(ycol, countries, daterange, scale):
+
+    if daterange is None:
+        daterange.append(0)
+        daterange.append(list(marks.keys())[-1])
+
+    filter_df = filter_data(
+        df,
+        date_from=marks.get(daterange[0]),
+        date_to=marks.get(daterange[1]),
+        countries=["all"],
+    )
+
+    filter_df["count"] = filter_df[ycol]
+    filter_df["date_str"] = filter_df["date"].apply(lambda x: str(x))
+
+    fig = px.choropleth(
+        data_frame=filter_df,
+        locations="iso_code",
+        hover_name="location",
+        color=ycol,
+        animation_frame="date_str",
+        animation_group=ycol,
+        color_continuous_scale=px.colors.sequential.Sunset_r,
+    )
+
+    fig.update_layout(
+        title_text="Covid-19 Map",
+        geo=dict(
+            showframe=False, showcoastlines=False, projection_type="equirectangular"
+        ),
+    )
+
+    fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 50
+    fig.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 50
+
+    return fig
 
 
 @app.callback(Output("date_from_display", "children"), Input("date_slider", "value"))
