@@ -4,5 +4,5 @@ altair
 dash
 dash_bootstrap_components
 plotly
-ploty_express
+plotly_express
 vega_datasets
