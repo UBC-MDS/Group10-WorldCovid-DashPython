@@ -1,0 +1,212 @@
+from dash import Dash, html, dcc, Input, Output
+import dash_bootstrap_components as dbc
+import locale
+import altair as alt
+import datetime
+import pandas as pd
+from utility import get_data, filter_data
+import plotly.graph_objects as go
+import plotly_express as px
+
+alt.data_transformers.disable_max_rows()
+
+df = get_data()
+daterange = [x for x in range(len(df["date"].unique()))]
+
+marks = {
+    numd: date.strftime("%Y-%m-%d")
+    for numd, date in zip(daterange, df["date"].dt.date.unique())
+}
+
+marks_display = {}
+marks_display.update({0: marks.get(0)})
+
+last_index = len(marks) - 1
+
+for key, item in marks.items():
+    if key % 60 == 0 and last_index - key > 30:
+        marks_display.update({key: item})
+
+
+marks_display.update({last_index: marks.get(last_index)})
+
+# Setup app and layout/ frontend
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+server = app.server
+
+app.layout = html.Div(
+    [
+        html.Iframe(
+            id="line_plot",
+            style={"border-width": "0", "width": "100%", "height": "400px"},
+        ),
+        html.Br(),
+        dcc.Graph(id="map_plot", figure={}, style={"height": "50vh"}),
+        html.Br(),
+        html.H4("Data scale"),
+        dcc.RadioItems(
+            id="scale_radio",
+            options=[
+                {"label": "Linear", "value": "linear"},
+                {"label": "Log", "value": "symlog"},
+            ],
+            value="linear",
+        ),
+        html.Br(),
+        html.H4("Feature drop down"),
+        dcc.Dropdown(
+            id="feature_dropdown",
+            value="new_cases_per_million",
+            options=[{"label": col, "value": col} for col in df.columns],
+        ),
+        html.Br(),
+        html.H4("Country selector"),
+        dcc.Dropdown(
+            id="country_select",
+            multi=True,
+            options=[
+                {"label": x, "value": x} for x in df.location.sort_values().unique()
+            ],
+            value=["Canada", "Germany", "Japan", "United Kingdom", "United States"],
+        ),
+        html.Br(),
+        html.H4("Date range slider"),
+        dcc.RangeSlider(
+            id="date_slider",
+            min=daterange[0],
+            max=daterange[-1],
+            value=[daterange[0], daterange[-1]],
+            step=1,
+            # tooltip={"placement": "bottom", "always_visible": True},
+            marks=marks_display,
+        ),
+        html.Br(),
+        html.H4("Date selected"),
+        html.Div(id="date_from_display"),
+        html.Div(id="date_to_display"),
+    ]
+)
+
+# line plot sample
+@app.callback(
+    Output("line_plot", "srcDoc"),
+    [
+        Input("feature_dropdown", "value"),
+        Input("country_select", "value"),
+        Input("date_slider", "value"),
+        Input("scale_radio", "value"),
+    ],
+)
+def plot_line(ycol, countries, daterange, scale):
+
+    if daterange is None:
+        daterange.append(0)
+        daterange.append(list(marks.keys())[-1])
+
+    filter_df = filter_data(
+        df,
+        date_from=marks.get(daterange[0]),
+        date_to=marks.get(daterange[1]),
+        countries=countries,
+    )
+
+    filter_df["count"] = filter_df[ycol]
+
+    click = alt.selection_multi(fields=["location"], bind="legend")
+
+    chart = (
+        alt.Chart(filter_df)
+        .mark_line()
+        .transform_window(
+            rolling_mean="mean(count)",
+            frame=[-7, 0],
+            groupby=["location"],
+        )
+        .encode(
+            y=alt.Y(
+                "rolling_mean:Q",
+                scale=alt.Scale(domainMin=0, type=scale),
+                title=ycol,
+            ),
+            x="date",
+            tooltip=["location", alt.Tooltip(ycol, title="count")],
+            color=alt.Color("location"),
+            opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
+        )
+        .add_selection(click)
+        .interactive()
+    )
+    return chart.to_html()
+
+
+# line plot sample
+@app.callback(
+    Output("map_plot", "figure"),
+    [
+        Input("feature_dropdown", "value"),
+        Input("country_select", "value"),
+        Input("date_slider", "value"),
+        Input("scale_radio", "value"),
+    ],
+)
+def plot_map(ycol, countries, daterange, scale):
+
+    if daterange is None:
+        daterange.append(0)
+        daterange.append(list(marks.keys())[-1])
+
+    filter_df = filter_data(
+        df,
+        date_from=marks.get(daterange[0]),
+        date_to=marks.get(daterange[1]),
+        countries=["all"],
+    )
+
+    filter_df["count"] = filter_df[ycol]
+    filter_df["date_str"] = filter_df["date"].apply(lambda x: str(x))
+
+    fig = px.choropleth(
+        data_frame=filter_df,
+        locations="iso_code",
+        hover_name="location",
+        color=ycol,
+        animation_frame="date_str",
+        animation_group=ycol,
+        color_continuous_scale=px.colors.sequential.Sunset_r,
+    )
+
+    fig.update_layout(
+        title_text="Covid-19 Map",
+        geo=dict(
+            showframe=False, showcoastlines=False, projection_type="equirectangular"
+        ),
+    )
+
+    fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 50
+    fig.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 50
+
+    return fig
+
+
+@app.callback(Output("date_from_display", "children"), Input("date_slider", "value"))
+def update_output(value):
+    if value is None:
+        value = []
+        value.append(0)
+        value.append(list(marks.keys())[-1])
+    return "From: {}".format(marks.get(value[0]))
+
+
+@app.callback(Output("date_to_display", "children"), Input("date_slider", "value"))
+def update_output(value):
+
+    if value is None:
+        value = []
+        value.append(0)
+        value.append(list(marks.keys())[-1])
+    return "To: {}".format(marks.get(value[1]))
+
+
+if __name__ == "__main__":
+    app.run_server(debug=True)
