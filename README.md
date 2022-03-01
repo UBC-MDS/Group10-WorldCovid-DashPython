@@ -34,7 +34,7 @@ The World COVID-19 Dashboard was created by Adam Morphy, Kingslin Lv, Thomas Siu
 | Adam Morphy   | [adammorphy](https://github.com/adammorphy)       |
 | Kingslin Lv   | [Kingslin0810](https://github.com/Kingslin0810)   |
 | Kristin Bunyan| [khbunyan](https://github.com/khbunyan)           |
-| Thomas Siu    | [thomassiu](https://github.com/thomassiu )         |
+| Thomas Siu    | [thomassiu](https://github.com/thomassiu)         |
 
 We welcome and recognize all contributions. Please find the guide for contribution in [Contributing Document](https://github.com/UBC-MDS/group10-worldcovid-dashpython/blob/main/CONTRIBUTING.md).
 
