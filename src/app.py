@@ -35,58 +35,110 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 server = app.server
 
-app.layout = html.Div(
-    [
-        html.Iframe(
-            id="line_plot",
-            style={"border-width": "0", "width": "100%", "height": "400px"},
-        ),
-        html.Br(),
-        dcc.Graph(id="map_plot", figure={}, style={"height": "50vh"}),
-        html.Br(),
-        html.H4("Data scale"),
-        dcc.RadioItems(
-            id="scale_radio",
-            options=[
-                {"label": "Linear", "value": "linear"},
-                {"label": "Log", "value": "symlog"},
-            ],
-            value="linear",
-        ),
-        html.Br(),
-        html.H4("Feature drop down"),
-        dcc.Dropdown(
-            id="feature_dropdown",
-            value="new_cases_per_million",
-            options=[{"label": col, "value": col} for col in df.columns],
-        ),
-        html.Br(),
-        html.H4("Country selector"),
-        dcc.Dropdown(
-            id="country_select",
-            multi=True,
-            options=[
+
+
+
+app.layout = dbc.Container([
+
+        html.H1('World Covid App', style={'border-width': '1', 'width': '100%', 'border-bottom-style': 'solid', 'border-bottom-color': 'black'}),
+
+        dbc.Row([
+
+            dbc.Col([
+
+            dcc.RadioItems(
+                id="scale_radio",
+                options=[
+                    {"label": "Linear", "value": "linear"},
+                    {"label": "Log", "value": "symlog"}],
+                value="linear",
+            )], md=2, style={'border-width': '0', 'width': '100%'}),   
+            
+            dbc.Col([ 
+                    html.H5("Date Range Slider"),
+                    dcc.RangeSlider(
+                    id="date_slider",
+                    min=daterange[0],
+                    max=daterange[-1],
+                    value=[daterange[0], daterange[-1]],
+                    step=1,
+                    # tooltip={"placement": "bottom", "always_visible": True},
+                    marks=marks_display
+                )], style={'border-width': '0'})  ## 'border-width': '1', 'width': '100%', 'border-style': 'solid', 'border-color': 'black'
+            
+    
+        ], style={'border-width': '0', 'width': '100%'}), 
+    
+    
+    
+
+        dbc.Row([  
+
+            dbc.Col([
+
+                html.H5("Country Selector"),
+                dcc.Dropdown(
+                id="country_select",
+                multi=True,
+                options=[
                 {"label": x, "value": x} for x in df.location.sort_values().unique()
-            ],
-            value=["Canada", "Germany", "Japan", "United Kingdom", "United States"],
-        ),
-        html.Br(),
-        html.H4("Date range slider"),
-        dcc.RangeSlider(
-            id="date_slider",
-            min=daterange[0],
-            max=daterange[-1],
-            value=[daterange[0], daterange[-1]],
-            step=1,
-            # tooltip={"placement": "bottom", "always_visible": True},
-            marks=marks_display,
-        ),
-        html.Br(),
-        html.H4("Date selected"),
-        html.Div(id="date_from_display"),
-        html.Div(id="date_to_display"),
-    ]
+                ],
+                value=['Canada', 'United States','United Kingdom','Netherlands','Ireland', 'Italy','Australia','China','Europe','Asia','South America','North America','Africa','Oceania','World'],
+            
+            )], md=2),
+
+        
+            dbc.Col([
+                
+                    dcc.Tabs([
+                        dcc.Tab(
+
+                            dbc.Col([
+
+                                dcc.Dropdown(
+                                        id="feature_dropdown",
+                                        value="new_cases_per_million",
+                                        options=[{"label": col, "value": col} for col in df.columns]
+                                    ,
+                                    style={'border-width': '0', 'width': '60%', 'height': '40px', 'backgroundColor': 'white'}),
+
+
+                                dcc.Graph(id="map_plot", figure={}, style={"height": "70vh"}),
+
+
+                                html.Iframe(
+                                    id="line_plot",
+                                    style={"border-width": "0", "width": "100vh", "height": "70vh"},
+                                ) 
+                            ])
+                            
+                            , label='Map'),
+
+
+                        dcc.Tab('Plots', label='Plot')], style={"width": "15%"}
+                    ),
+
+                    
+
+                    html.H5("Date selected"),
+                    html.Div(id="date_from_display"),
+                    html.Div(id="date_to_display")
+
+                    
+                                
+            ],  style={'border-width': '0', 'width': '90%', 'backgroundColor': 'white', 'float': 'right'}) 
+
+
+        ])
+
+
+    ],  style={'border-width': '0', 'backgroundColor': '#72a0c1', 'min-height': '100vh', 'min-width': '1300px'}
+
 )
+
+
+
+
 
 # line plot sample
 @app.callback(
@@ -140,7 +192,7 @@ def plot_line(ycol, countries, daterange, scale):
     return chart.to_html()
 
 
-# line plot sample
+# Map plot sample
 @app.callback(
     Output("map_plot", "figure"),
     [
