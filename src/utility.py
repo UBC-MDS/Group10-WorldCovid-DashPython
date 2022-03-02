@@ -48,6 +48,7 @@ def get_data(date_from=None, date_to=None, location=None):
         "people_vaccinated",
         "people_fully_vaccinated",
         "new_vaccinations",
+        "population",
     ]
 
     df = df[columns]
