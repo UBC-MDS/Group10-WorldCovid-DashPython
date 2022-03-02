@@ -30,6 +30,59 @@ for key, item in marks.items():
 
 marks_display.update({last_index: marks.get(last_index)})
 
+feature_dropdown = dcc.Dropdown(
+    id="feature_dropdown",
+    value="total_cases",
+    # options=[{"label": col, "value": col} for col in df.columns],
+    options=[
+        {"label": "Total confirmed cases", "value": "total_cases"},
+        {
+            "label": "Total confirmed cases per million people",
+            "value": "total_cases_per_million",
+        },
+        {"label": "Daily confirmed cases", "value": "new_cases"},
+        {
+            "label": "Daily confirmed cases per million people",
+            "value": "new_cases_per_million",
+        },
+        {"label": "Total deaths", "value": "total_deaths"},
+        {
+            "label": "Total deaths per million people",
+            "value": "total_deaths_per_million",
+        },
+        {"label": "Daily deaths", "value": "new_deaths"},
+        {"label": "Daily deaths per million people", "value": "new_deaths_per_million"},
+        {"label": "Current ICU patients", "value": "icu_patients"},
+        {
+            "label": "Current ICU patients per million people",
+            "value": "icu_patients_per_million",
+        },
+        {"label": "Current hospitalisation", "value": "hosp_patients"},
+        {
+            "label": "Current hospitalisation per million people",
+            "value": "hosp_patients_per_million",
+        },
+        {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
+        {
+            "label": "Weekly ICU admissions per million people",
+            "value": "weekly_icu_admissions_per_million",
+        },
+        {
+            "label": "Weekly hospitalisation admission",
+            "value": "weekly_hosp_admissions",
+        },
+        {
+            "label": "Weekly hospitalisation admission per million people",
+            "value": "weekly_hosp_admissions_per_million",
+        },
+        {
+            "label": "People fully vaccinated",
+            "value": "people_fully_vaccinated",
+        },
+    ],
+)
+
+
 # Setup app and layout/ frontend
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -55,11 +108,7 @@ app.layout = html.Div(
         ),
         html.Br(),
         html.H4("Feature drop down"),
-        dcc.Dropdown(
-            id="feature_dropdown",
-            value="new_cases_per_million",
-            options=[{"label": col, "value": col} for col in df.columns],
-        ),
+        feature_dropdown,
         html.Br(),
         html.H4("Country selector"),
         dcc.Dropdown(
@@ -160,7 +209,7 @@ def plot_map(ycol, countries, daterange, scale):
         df,
         date_from=marks.get(daterange[0]),
         date_to=marks.get(daterange[1]),
-        countries=["all"],
+        countries=countries,
     )
 
     filter_df["count"] = filter_df[ycol]
