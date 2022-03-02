@@ -32,8 +32,7 @@ marks_display.update({last_index: marks.get(last_index)})
 
 feature_dropdown = dcc.Dropdown(
     id="feature_dropdown",
-    value="total_cases",
-    # options=[{"label": col, "value": col} for col in df.columns],
+    value="new_cases_per_million",
     options=[
         {"label": "Total confirmed cases", "value": "total_cases"},
         {
@@ -80,6 +79,12 @@ feature_dropdown = dcc.Dropdown(
             "value": "people_fully_vaccinated",
         },
     ],
+    style={
+        "border-width": "0",
+        "width": "60%",
+        "height": "40px",
+        "backgroundColor": "white",
+    },
 )
 
 
@@ -173,20 +178,7 @@ app.layout = dbc.Container(
                                 dcc.Tab(
                                     dbc.Col(
                                         [
-                                            dcc.Dropdown(
-                                                id="feature_dropdown",
-                                                value="new_cases_per_million",
-                                                options=[
-                                                    {"label": col, "value": col}
-                                                    for col in df.columns
-                                                ],
-                                                style={
-                                                    "border-width": "0",
-                                                    "width": "60%",
-                                                    "height": "40px",
-                                                    "backgroundColor": "white",
-                                                },
-                                            ),
+                                            feature_dropdown,
                                             dcc.Graph(
                                                 id="map_plot",
                                                 figure={},
