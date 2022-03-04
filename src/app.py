@@ -91,16 +91,16 @@ feature_dropdown = dcc.Dropdown(
         },
         {"label": "Daily deaths", "value": "new_deaths"},
         {"label": "Daily deaths per million people", "value": "new_deaths_per_million"},
-        {"label": "Current ICU patients", "value": "icu_patients"},
-        {
-            "label": "Current ICU patients per million people",
-            "value": "icu_patients_per_million",
-        },
-        {"label": "Current hospitalisation", "value": "hosp_patients"},
-        {
-            "label": "Current hospitalisation per million people",
-            "value": "hosp_patients_per_million",
-        },
+        #{"label": "Current ICU patients", "value": "icu_patients"},
+        #{
+        #    "label": "Current ICU patients per million people",
+        #    "value": "icu_patients_per_million",
+        #},
+        #{"label": "Current hospitalisation", "value": "hosp_patients"},
+        #{
+        #    "label": "Current hospitalisation per million people",
+        #    "value": "hosp_patients_per_million",
+        #},
         # {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
         # {
         #    "label": "Weekly ICU admissions per million people",
@@ -174,7 +174,7 @@ sidebar = dbc.Col(
             html.Br(),
             html.Br(),
             html.P(
-                "Put descriptions here...",
+                "Explore the global situation of COVID-19 using this interactive dashboard. Compare selected countries and indicators across different date ranges to observe the effect of policy, and vaccination rate.",
             ),
             html.P(
                 "Filter charts with following:",
@@ -185,7 +185,7 @@ sidebar = dbc.Col(
             html.Br(),
             html.B("Country:"),
             html.P(
-                "Put descriptions here...",
+                "Use this filter to add or remove a country from the analysis",
             ),
             html.Br(),
             html.Br(),
@@ -212,11 +212,35 @@ map_tab = (
                 style={"font-size": "25px"},
             ),
             html.P(
-                "Put descriptions here...",
+                "The map below depicts the selected COVID-19 indicator for the selected countries. Use the play button to animate the timeline of this indicator over the date range selected by the slider above.",
             ),
-            html.B("Feature:"),
+            html.B("Indicator:"),
             html.P(
-                "Put descriptions here...",
+                "Select one of the following:",
+            ),
+            html.P(
+                "Total confirmed cases: Number of total confirmed cases of COVID-19 to date",
+            ),
+            html.P(
+                "Total confirmed cases per million people: Number of total confirmed cases of COVID-19 to date, per million people",
+            ),
+            html.P(
+                "Daily confirmed cases: Number of confirmed daily cases of COVID-19",
+            ),
+            html.P(
+                "Daily confirmed cases per million people: Number of confirmed daily cases of COVID-19, per million people",
+            ),
+            html.P(
+                "Total deaths: Number of total confirmed deaths due to COVID-19 to date",
+            ),
+            html.P(
+                "Total deaths per million people: Number of total confirmed deaths due to COVID-19 to date, per million people",
+            ),
+            html.P(
+                "Daily deaths: Number of total confirmed daily deaths due to COVID-19",
+            ),
+            html.P(
+                "Daily deaths per million people: Number of total confirmed daily deaths due to COVID-19, per million people",
             ),
             html.Br(),
             html.Br(),
@@ -241,11 +265,11 @@ map_tab = (
                 style={"font-size": "25px"},
             ),
             html.P(
-                "Put descriptions here...",
+                "The line plot below depicts the selected COVID-19 indicator for the selected countries over the date range selected by the slider above. Click the legend to highlight particular countries.",
             ),
             html.B("Data Scale:"),
             html.P(
-                "Put descriptions here...",
+                "Use the radio buttons below to change the data in the visualizations to a linear or log scale.",
             ),
             html.P(" "),
             html.Br(),
@@ -280,7 +304,7 @@ charts_tab = (
             html.P(" "),
             html.B("Data Scale:"),
             html.P(
-                "Put descriptions here...",
+                "Use the radio buttons below to change the data in the visualizations to a linear or log scale.",
             ),
             html.P(" "),
             html.Br(),
@@ -290,11 +314,11 @@ charts_tab = (
             dbc.Col(
                 [
                     html.P(
-                        "Chart 1 (Rename):",
+                        "Total vaccinations by country:",
                         style={"font-size": "25px"},
                     ),
                     html.P(
-                        "Put descriptions here...",
+                        "Shows the total number of people vaccinated per million for the selected countries, for the first date of the selected timeline.",
                     ),
                     dcc.Loading(
                         html.Iframe(
@@ -315,11 +339,11 @@ charts_tab = (
             dbc.Col(
                 [
                     html.P(
-                        "Chart 2 (Rename):",
+                        "Current ICU hospitalizations:",
                         style={"font-size": "25px"},
                     ),
                     html.P(
-                        "Put descriptions here...",
+                        "Shows the current number of people per million admitted to the ICU for the selected countries, for the first date of the selected timeline.",
                     ),
                     dcc.Loading(
                         html.Iframe(
@@ -344,11 +368,11 @@ charts_tab = (
             dbc.Col(
                 [
                     html.P(
-                        "Chart 3 (Rename):",
+                        "Current hospitalizations:",
                         style={"font-size": "25px"},
                     ),
                     html.P(
-                        "Put descriptions here...",
+                        "Shows the current number of people per million admitted to the hospital for the selected countries, for the first date of the selected timeline.",
                     ),
                     dcc.Loading(
                         html.Iframe(
@@ -424,12 +448,12 @@ app.layout = dbc.Container(
                                 [
                                     dbc.Tab(
                                         map_tab,
-                                        label="Map",
+                                        label="Global COVID-19 Indicators",
                                         tab_id="map-tab",
                                     ),
                                     dbc.Tab(
                                         charts_tab,
-                                        label="Charts",
+                                        label="Vaccination and Hospitalization Indicators",
                                         tab_id="charts-tab",
                                     ),
                                 ]
