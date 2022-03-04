@@ -6,21 +6,24 @@ The World COVID-19 Dashboard is an interactive app that allows users to explore 
 
 Design:
 
-Our app is centred by a world map showing covid indicators across the globe. The left-hand side of the dashboard contains the main variable filters that users can select to visually present the data across different countries in the world. There are two filters here:
-  - the line chart filter, where the user can select two variables for the line chart visualizations on the right of the dashboard, variables like: Confirmed Cases, Deaths, Hospitalizations, ICU's (number of patients in the ICU), Recoveries, and Vaccination Numbers etc; and
-  - the country filter, where the user can select which country's data they would like displayed
+Our app consists of two main tabs: Global COVID-19 Indicators and Vaccination and Hospitalization Indicators.
 
-The top of the app contains our date-time slider, that allows the user to filter for a particular time period they would like to see, the map filter (the blue filter), which controls which feature is showcased in the centre map, and our two data filters:
-  - a logarithmic or linear data filter; and
-  - a filter for the level of granularity: daily, monthly, or weekly
+Global COVID-19 Indicators:
+ - This tab aims to give a "global overview" of the COVID-19 situation. The tab has two main elements, an animated global map that highlights selected countries for the selected indicator and a line plot that depicts the same data in a different format. Both of these visualization elements are filtered using the "Indicator" drop down to select which indicator is visualized, the "Country" filter to select which countries are showcased, and the "Date range" slider at the top of the screen that limits or expands the visiualized timeline. A main focus of this tab is the animation in the map, which shows the change in data over time by country. This element is expecially important as it tells a story of where the world started, where it went, and how far it has come in a very tangible way. The line plot is also filterable by data type: linear or log
 
-The detailed proposal can be found [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython/blob/main/docs/proposal.md)
+Vaccination and Hospitalization:
+- This tab aims to give a sense of the movement of vaccinaction rates and hospitalizations, and how that differed between nations throughout the pandemic. It consists of four line charts; total vaccinations by country, current ICU hospitalizations, and current hospitalizations. Simialr to the first tab, the charts are filtered by the "Country" filter to select which countries are showcased, and the "Date range" slider at the top of the screen that limits or expands the visiualized timeline. They can also be filtered by data type: linear or log.
+
+App usage demonstration:
+- Per the GIF below, our app is meant to be highly filterable and interactive and can be used multiple ways to suit the data needs of policy makers, and public health communicators in the best way they see fit for the message they want to convey
+
+
+**add GIF here**
+
+
+
 
 The complete COVID-19 dataset used in our dashboard can be downloaded in [CSV](https://covid.ourworldindata.org/data/owid-covid-data.csv) | [XLSX](https://covid.ourworldindata.org/data/owid-covid-data.xlsx) | [JSON](https://covid.ourworldindata.org/data/owid-covid-data.json) and this is a collection of the COVID-19 data maintained by [_Our World in Data_](https://ourworldindata.org/coronavirus).
-
-## Dashboard Design
-
-![](dashboad_sketch.png)
 
 ## License
 
