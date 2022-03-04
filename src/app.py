@@ -9,6 +9,8 @@ import plotly.graph_objects as go
 import plotly_express as px
 from datetime import datetime
 
+### App setup codes
+
 alt.data_transformers.disable_max_rows()
 
 df = get_data()
@@ -60,6 +62,10 @@ marks_display.update(
     }
 )
 
+### App setup codes end
+
+### Selection modules
+
 feature_dropdown = dcc.Dropdown(
     id="feature_dropdown",
     value="new_cases_per_million",
@@ -107,59 +113,6 @@ feature_dropdown = dcc.Dropdown(
     ],
     style={
         "height": "40px",
-        "backgroundColor": "white",
-    },
-)
-
-feature_dropdown_2 = dcc.Dropdown(
-    id="feature_dropdown_2",
-    value="new_cases_per_million",
-    options=[
-        {"label": "Total confirmed cases", "value": "total_cases"},
-        {
-            "label": "Total confirmed cases per million people",
-            "value": "total_cases_per_million",
-        },
-        {"label": "Daily confirmed cases", "value": "new_cases"},
-        {
-            "label": "Daily confirmed cases per million people",
-            "value": "new_cases_per_million",
-        },
-        {"label": "Total deaths", "value": "total_deaths"},
-        {
-            "label": "Total deaths per million people",
-            "value": "total_deaths_per_million",
-        },
-        {"label": "Daily deaths", "value": "new_deaths"},
-        {"label": "Daily deaths per million people", "value": "new_deaths_per_million"},
-        {"label": "Current ICU patients", "value": "icu_patients"},
-        {
-            "label": "Current ICU patients per million people",
-            "value": "icu_patients_per_million",
-        },
-        {"label": "Current hospitalisation", "value": "hosp_patients"},
-        {
-            "label": "Current hospitalisation per million people",
-            "value": "hosp_patients_per_million",
-        },
-        {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
-        {
-            "label": "Weekly ICU admissions per million people",
-            "value": "weekly_icu_admissions_per_million",
-        },
-        {
-            "label": "Weekly hospitalisation admission",
-            "value": "weekly_hosp_admissions",
-        },
-        {
-            "label": "Weekly hospitalisation admission per million people",
-            "value": "weekly_hosp_admissions_per_million",
-        },
-    ],
-    style={
-        "border-width": "0",
-        "height": "40px",
-        "backgroundColor": "white",
     },
 )
 
@@ -172,14 +125,25 @@ date_slider = dcc.RangeSlider(
     marks=marks_display,
 )
 
-# Data scale radio button
-scale_radio = dbc.RadioItems(
+# Data scale radio button for line chart in map tab
+scale_map_line_radio = dbc.RadioItems(
     options=[
         {"label": "Linear", "value": "linear"},
         {"label": "Log", "value": "symlog"},
     ],
     value="linear",
-    id="scale-radio",
+    id="scale-map-line-radio",
+    inline=True,
+)
+
+# Data scale radio button for line charts in Charts tab
+scale_charts_radio = dbc.RadioItems(
+    options=[
+        {"label": "Linear", "value": "linear"},
+        {"label": "Log", "value": "symlog"},
+    ],
+    value="linear",
+    id="scale-charts-radio",
     inline=True,
 )
 
@@ -191,36 +155,41 @@ country_selector = dcc.Dropdown(
     value=["Canada", "United States", "United Kingdom"],
 )
 
+### Selection module ends
+
+### Side bars and Tabs
+
 # Sidebar
 sidebar = dbc.Col(
-    [
-        html.Br(),
-        html.H3(
-            "World Covid-19 Dashboard",
-        ),
-        html.Br(),
-        html.P(
-            "Filter charts with following:",
-            style={"font-size": "20px"},
-        ),
-        html.Hr(),
-        html.B("Data Scale:"),
-        html.Br(),
-        html.Br(),
-        scale_radio,
-        html.Br(),
-        html.Br(),
-        html.B("Country:"),
-        html.Br(),
-        html.Br(),
-        country_selector,
-        html.Br(),
-        html.Br(),
-        html.B("Features:"),
-        html.Br(),
-        html.Br(),
-        feature_dropdown,
-    ],
+    dbc.Row(
+        [
+            html.Br(),
+            html.H3(
+                "World Covid-19 Dashboard",
+            ),
+            html.Br(),
+            html.Br(),
+            html.P(
+                "Put descriptions here...",
+            ),
+            html.P(
+                "Filter charts with following:",
+                style={"font-size": "20px"},
+            ),
+            html.Hr(),
+            html.Br(),
+            html.Br(),
+            html.B("Country:"),
+            html.P(
+                "Put descriptions here...",
+            ),
+            html.Br(),
+            html.Br(),
+            country_selector,
+            html.Br(),
+            html.Br(),
+        ],
+    ),
     width=3,
     style={
         "border-width": "0",
@@ -231,40 +200,60 @@ sidebar = dbc.Col(
 )
 
 # Map Tab
-map_tab = dbc.Col(
-    [
-        dbc.Row(
-            [
-                html.P(" "),
-                html.Br(),
-                html.Br(),
-                html.B(id="date_display"),
-                html.Br(),
-                html.Br(),
-                date_slider,
-                html.Br(),
-                html.Br(),
+map_tab = (
+    dbc.Row(
+        [
+            html.P(
+                "Animated World Map:",
+                style={"font-size": "25px"},
+            ),
+            html.P(
+                "Put descriptions here...",
+            ),
+            html.B("Feature:"),
+            html.P(
+                "Put descriptions here...",
+            ),
+            html.Br(),
+            html.Br(),
+            feature_dropdown,
+        ]
+    ),
+    dbc.Row(
+        dcc.Loading(
+            dcc.Graph(
+                id="map_plot",
+                style={"height": "70vh"},
+            ),
+        )
+    ),
+    dbc.Row(
+        [
+            html.Br(),
+            html.Br(),
+            html.P(" "),
+            html.P(
+                "Line Plot:",
+                style={"font-size": "25px"},
+            ),
+            html.P(
+                "Put descriptions here...",
+            ),
+            html.B("Data Scale:"),
+            html.P(
+                "Put descriptions here...",
+            ),
+            html.P(" "),
+            html.Br(),
+            scale_map_line_radio,
+            dbc.Col(
                 html.P(
-                    "Animated World Map:",
-                    style={"font-size": "25px"},
+                    " ",
                 ),
-                dcc.Graph(
-                    id="map_plot",
-                    style={"height": "70vh"},
-                ),
-                html.Br(),
-                html.Br(),
-                html.P(
-                    "Compliment Line Plot:",
-                    style={"font-size": "25px"},
-                ),
-                dbc.Col(
-                    html.P(
-                        " ",
-                    ),
-                    width=3,
-                ),
-                dbc.Col(
+                width=2,
+            ),
+            dbc.Col(
+                dcc.Loading(
                     html.Iframe(
                         id="map_line_chart",
                         style={
@@ -273,11 +262,135 @@ map_tab = dbc.Col(
                             "textAlign": "center",
                         },
                     ),
-                ),
-            ]
-        ),
-    ]
+                )
+            ),
+        ]
+    ),
 )
+
+
+# Charts Tab
+charts_tab = (
+    dbc.Row(
+        [
+            html.P(" "),
+            html.B("Data Scale:"),
+            html.P(
+                "Put descriptions here...",
+            ),
+            html.P(" "),
+            html.Br(),
+            scale_charts_radio,
+            html.Br(),
+            html.Br(),
+            dbc.Col(
+                [
+                    html.P(
+                        "Chart 1 (Rename):",
+                        style={"font-size": "25px"},
+                    ),
+                    html.P(
+                        "Put descriptions here...",
+                    ),
+                    dcc.Loading(
+                        html.Iframe(
+                            id="chart_1",
+                            style={
+                                "display": "block",
+                                "overflow": " hidden",
+                                "margin": "auto",
+                                "border-width": "0",
+                                "width": "1500px",
+                                "height": "500px",
+                            },
+                        ),
+                    ),
+                ],
+                width=6,
+            ),
+            dbc.Col(
+                [
+                    html.P(
+                        "Chart 2 (Rename):",
+                        style={"font-size": "25px"},
+                    ),
+                    html.P(
+                        "Put descriptions here...",
+                    ),
+                    dcc.Loading(
+                        html.Iframe(
+                            id="chart_2",
+                            style={
+                                "display": "block",
+                                "overflow": " hidden",
+                                "margin": "auto",
+                                "border-width": "0",
+                                "width": "1500px",
+                                "height": "500px",
+                            },
+                        ),
+                    ),
+                ],
+                width=6,
+            ),
+        ]
+    ),
+    dbc.Row(
+        [
+            dbc.Col(
+                [
+                    html.P(
+                        "Chart 3 (Rename):",
+                        style={"font-size": "25px"},
+                    ),
+                    html.P(
+                        "Put descriptions here...",
+                    ),
+                    dcc.Loading(
+                        html.Iframe(
+                            id="chart_3",
+                            style={
+                                "display": "block",
+                                "overflow": " hidden",
+                                "margin": "auto",
+                                "border-width": "0",
+                                "width": "1500px",
+                                "height": "500px",
+                            },
+                        ),
+                    ),
+                ],
+                width=6,
+            ),
+            dbc.Col(
+                [
+                    html.P(
+                        "Chart 4 (Rename):",
+                        style={"font-size": "25px"},
+                    ),
+                    html.P(
+                        "Put descriptions here...",
+                    ),
+                    dcc.Loading(
+                        html.Iframe(
+                            id="chart_4",
+                            style={
+                                "display": "block",
+                                "overflow": " hidden",
+                                "margin": "auto",
+                                "border-width": "0",
+                                "width": "1500px",
+                                "height": "500px",
+                            },
+                        ),
+                    ),
+                ],
+                width=6,
+            ),
+        ]
+    ),
+)
+
 
 # Setup app and layout/ frontend
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
@@ -290,22 +403,38 @@ app.layout = dbc.Container(
             sidebar,
             dbc.Col(
                 [
-                    dbc.Tabs(
+                    dbc.Row(
                         [
-                            dbc.Tab(
-                                map_tab,
-                                label="Map",
-                                tab_id="map-tab",
+                            html.P(
+                                " ",
                             ),
-                            dbc.Tab(
-                                # feature_dropdown_2,
-                                label="Charts",
-                                tab_id="charts-tab",
+                            html.B(
+                                id="date_display",
+                            ),
+                            html.Br(),
+                            html.Br(),
+                            date_slider,
+                            html.Br(),
+                            html.Br(),
+                            dbc.Tabs(
+                                [
+                                    dbc.Tab(
+                                        map_tab,
+                                        label="Map",
+                                        tab_id="map-tab",
+                                    ),
+                                    dbc.Tab(
+                                        charts_tab,
+                                        label="Charts",
+                                        tab_id="charts-tab",
+                                    ),
+                                ]
                             ),
                         ]
                     )
                 ],
                 # style={"width": "80%"},
+                width=9,
             ),
         ]
     ),
@@ -497,7 +626,7 @@ def plot_map(ycol, countries, daterange):
         Input("feature_dropdown", "value"),
         Input("country-selector", "value"),
         Input("date_slider", "value"),
-        Input("scale-radio", "value"),
+        Input("scale-map-line-radio", "value"),
     ],
 )
 def plot_map_line_chart(ycol, countries, daterange, scale):
@@ -560,6 +689,238 @@ def update_output(value):
     output_string = template.format(marks.get(value[0]), marks.get(value[1]))
 
     return output_string
+
+
+# line chart 1
+@app.callback(
+    Output("chart_1", "srcDoc"),
+    [
+        Input("feature_dropdown", "value"),
+        Input("country-selector", "value"),
+        Input("date_slider", "value"),
+        Input("scale-charts-radio", "value"),
+    ],
+)
+def plot_chart_1(ycol, countries, daterange, scale):
+
+    if daterange is None:
+        daterange.append(0)
+        daterange.append(list(marks.keys())[-1])
+
+    filter_df = filter_data(
+        df,
+        date_from=marks.get(daterange[0]),
+        date_to=marks.get(daterange[1]),
+        countries=countries,
+    )
+
+    filter_df["count"] = filter_df[ycol]
+
+    click = alt.selection_multi(fields=["location"], bind="legend")
+
+    chart = (
+        alt.Chart(filter_df)
+        .mark_line()
+        .transform_window(
+            rolling_mean="mean(count)",
+            frame=[-7, 0],
+            groupby=["location"],
+        )
+        .encode(
+            y=alt.Y(
+                "rolling_mean:Q",
+                scale=alt.Scale(domainMin=0, type=scale),
+                title=ycol,
+            ),
+            x="date",
+            tooltip=["location", alt.Tooltip(ycol, title="count")],
+            color=alt.Color("location"),
+            opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
+        )
+        .properties(width=400, height=300, title=f"Country Data for {ycol}")
+        .add_selection(click)
+        .interactive()
+        .configure_title(
+            fontSize=15,
+            anchor="start",
+        )
+    )
+
+    return chart.to_html()
+
+
+# Chart 2
+@app.callback(
+    Output("chart_2", "srcDoc"),
+    [
+        Input("feature_dropdown", "value"),
+        Input("country-selector", "value"),
+        Input("date_slider", "value"),
+        Input("scale-charts-radio", "value"),
+    ],
+)
+def plot_chart_2(ycol, countries, daterange, scale):
+
+    if daterange is None:
+        daterange.append(0)
+        daterange.append(list(marks.keys())[-1])
+
+    filter_df = filter_data(
+        df,
+        date_from=marks.get(daterange[0]),
+        date_to=marks.get(daterange[1]),
+        countries=countries,
+    )
+
+    filter_df["count"] = filter_df[ycol]
+
+    click = alt.selection_multi(fields=["location"], bind="legend")
+
+    chart = (
+        alt.Chart(filter_df)
+        .mark_line()
+        .transform_window(
+            rolling_mean="mean(count)",
+            frame=[-7, 0],
+            groupby=["location"],
+        )
+        .encode(
+            y=alt.Y(
+                "rolling_mean:Q",
+                scale=alt.Scale(domainMin=0, type=scale),
+                title=ycol,
+            ),
+            x="date",
+            tooltip=["location", alt.Tooltip(ycol, title="count")],
+            color=alt.Color("location"),
+            opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
+        )
+        .properties(width=400, height=300, title=f"Country Data for {ycol}")
+        .add_selection(click)
+        .interactive()
+        .configure_title(
+            fontSize=15,
+            anchor="start",
+        )
+    )
+
+    return chart.to_html()
+
+
+# Chart 3
+@app.callback(
+    Output("chart_3", "srcDoc"),
+    [
+        Input("feature_dropdown", "value"),
+        Input("country-selector", "value"),
+        Input("date_slider", "value"),
+        Input("scale-charts-radio", "value"),
+    ],
+)
+def plot_chart_3(ycol, countries, daterange, scale):
+
+    if daterange is None:
+        daterange.append(0)
+        daterange.append(list(marks.keys())[-1])
+
+    filter_df = filter_data(
+        df,
+        date_from=marks.get(daterange[0]),
+        date_to=marks.get(daterange[1]),
+        countries=countries,
+    )
+
+    filter_df["count"] = filter_df[ycol]
+
+    click = alt.selection_multi(fields=["location"], bind="legend")
+
+    chart = (
+        alt.Chart(filter_df)
+        .mark_line()
+        .transform_window(
+            rolling_mean="mean(count)",
+            frame=[-7, 0],
+            groupby=["location"],
+        )
+        .encode(
+            y=alt.Y(
+                "rolling_mean:Q",
+                scale=alt.Scale(domainMin=0, type=scale),
+                title=ycol,
+            ),
+            x="date",
+            tooltip=["location", alt.Tooltip(ycol, title="count")],
+            color=alt.Color("location"),
+            opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
+        )
+        .properties(width=400, height=300, title=f"Country Data for {ycol}")
+        .add_selection(click)
+        .interactive()
+        .configure_title(
+            fontSize=15,
+            anchor="start",
+        )
+    )
+
+    return chart.to_html()
+
+
+# Chart 4
+@app.callback(
+    Output("chart_4", "srcDoc"),
+    [
+        Input("feature_dropdown", "value"),
+        Input("country-selector", "value"),
+        Input("date_slider", "value"),
+        Input("scale-charts-radio", "value"),
+    ],
+)
+def plot_chart_4(ycol, countries, daterange, scale):
+
+    if daterange is None:
+        daterange.append(0)
+        daterange.append(list(marks.keys())[-1])
+
+    filter_df = filter_data(
+        df,
+        date_from=marks.get(daterange[0]),
+        date_to=marks.get(daterange[1]),
+        countries=countries,
+    )
+
+    filter_df["count"] = filter_df[ycol]
+
+    click = alt.selection_multi(fields=["location"], bind="legend")
+
+    chart = (
+        alt.Chart(filter_df)
+        .mark_line()
+        .transform_window(
+            rolling_mean="mean(count)",
+            frame=[-7, 0],
+            groupby=["location"],
+        )
+        .encode(
+            y=alt.Y(
+                "rolling_mean:Q",
+                scale=alt.Scale(domainMin=0, type=scale),
+                title=ycol,
+            ),
+            x="date",
+            tooltip=["location", alt.Tooltip(ycol, title="count")],
+            color=alt.Color("location"),
+            opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
+        )
+        .properties(width=400, height=300, title=f"Country Data for {ycol}")
+        .add_selection(click)
+        .interactive()
+        .configure_title(
+            fontSize=15,
+            anchor="start",
+        )
+    )
+
+    return chart.to_html()
 
 
 if __name__ == "__main__":
