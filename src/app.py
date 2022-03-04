@@ -315,11 +315,11 @@ charts_tab = (
             dbc.Col(
                 [
                     html.P(
-                        "Current ICU hospitalizations:",
+                        "New vaccinations by country:",
                         style={"font-size": "25px"},
                     ),
                     html.P(
-                        "Shows the current number of people per million admitted to the ICU for the selected countries, for the first date of the selected timeline.",
+                        "Shows the new number of people vaccinated per million for the selected countries, for the first date of the selected timeline.",
                     ),
                     dcc.Loading(
                         html.Iframe(
@@ -335,20 +335,16 @@ charts_tab = (
                         ),
                     ),
                 ],
-                #  width=4,
+                #    width=5,
             ),
-        ]
-    ),
-    dbc.Row(
-        [
             dbc.Col(
                 [
                     html.P(
-                        "Current hospitalizations:",
+                        "Current ICU hospitalizations:",
                         style={"font-size": "25px"},
                     ),
                     html.P(
-                        "Shows the current number of people per million admitted to the hospital for the selected countries, for the first date of the selected timeline.",
+                        "Shows the current number of people per million admitted to the ICU for the selected countries, for the first date of the selected timeline.",
                     ),
                     dcc.Loading(
                         html.Iframe(
@@ -364,16 +360,16 @@ charts_tab = (
                         ),
                     ),
                 ],
-                # width=5,
+                #  width=4,
             ),
             dbc.Col(
                 [
                     html.P(
-                        "Chart 4 (Rename):",
+                        "Current hospitalizations:",
                         style={"font-size": "25px"},
                     ),
                     html.P(
-                        "Put descriptions here...",
+                        "Shows the current number of people per million admitted to the hospital for the selected countries, for the first date of the selected timeline.",
                     ),
                     dcc.Loading(
                         html.Iframe(
@@ -389,7 +385,7 @@ charts_tab = (
                         ),
                     ),
                 ],
-                # width=4,
+                # width=5,
             ),
         ]
     ),
@@ -766,8 +762,7 @@ def plot_chart_1(countries, daterange, scale):
 
     return chart.to_html()
 
-
-# Chart 2
+# line chart 2
 @app.callback(
     Output("chart_2", "srcDoc"),
     [
@@ -777,6 +772,78 @@ def plot_chart_1(countries, daterange, scale):
     ],
 )
 def plot_chart_2(countries, daterange, scale):
+
+    if daterange is None:
+        daterange.append(0)
+        daterange.append(list(marks.keys())[-1])
+
+    filter_df = filter_data(
+        df,
+        date_from=marks.get(daterange[0]),
+        date_to=marks.get(daterange[1]),
+        countries=countries,
+    )
+
+    filter_df["count"] = filter_df["new_vaccinations"] / 1000000
+
+    click = alt.selection_multi(fields=["location"], bind="legend")
+
+    chart = (
+        alt.Chart(filter_df)
+        .mark_line()
+        .transform_window(
+            rolling_mean="mean(count)",
+            frame=[-7, 0],
+            groupby=["location"],
+        )
+        .encode(
+            y=alt.Y(
+                "rolling_mean:Q",
+                scale=alt.Scale(domainMin=0, type=scale),
+                title="People newly vaccinated",
+            ),
+            x="date",
+            tooltip=[
+                "location",
+                alt.Tooltip("new_vaccinations", title="People newly vaccinated"),
+            ],
+            color=alt.Color(
+                "location",
+                legend=alt.Legend(
+                    title="Country",
+                    orient="none",
+                    direction="horizontal",
+                    legendX=0,
+                    legendY=-50,
+                    columns=4,
+                ),
+            ),
+            opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
+        )
+        .properties(
+            width=400, height=300, title=f"Country Data for people newly vaccinated"
+        )
+        .add_selection(click)
+        .interactive()
+        .configure_title(
+            fontSize=15,
+            anchor="start",
+        )
+    )
+
+    return chart.to_html()
+
+
+# Chart 3
+@app.callback(
+    Output("chart_3", "srcDoc"),
+    [
+        Input("country-selector", "value"),
+        Input("date_slider", "value"),
+        Input("scale-charts-radio", "value"),
+    ],
+)
+def plot_chart_3(countries, daterange, scale):
 
     ycol = "icu_patients_per_million"
 
@@ -843,16 +910,16 @@ def plot_chart_2(countries, daterange, scale):
     return chart.to_html()
 
 
-# Chart 3
+# Chart 4
 @app.callback(
-    Output("chart_3", "srcDoc"),
+    Output("chart_4", "srcDoc"),
     [
         Input("country-selector", "value"),
         Input("date_slider", "value"),
         Input("scale-charts-radio", "value"),
     ],
 )
-def plot_chart_3(countries, daterange, scale):
+def plot_chart_4(countries, daterange, scale):
 
     if daterange is None:
         daterange.append(0)
@@ -906,74 +973,6 @@ def plot_chart_3(countries, daterange, scale):
             height=300,
             title=f"Country Data for hospitalized patients per million people",
         )
-        .add_selection(click)
-        .interactive()
-        .configure_title(
-            fontSize=15,
-            anchor="start",
-        )
-    )
-
-    return chart.to_html()
-
-
-# Chart 4
-@app.callback(
-    Output("chart_4", "srcDoc"),
-    [
-        Input("feature_dropdown", "value"),
-        Input("country-selector", "value"),
-        Input("date_slider", "value"),
-        Input("scale-charts-radio", "value"),
-    ],
-)
-def plot_chart_4(ycol, countries, daterange, scale):
-
-    if daterange is None:
-        daterange.append(0)
-        daterange.append(list(marks.keys())[-1])
-
-    filter_df = filter_data(
-        df,
-        date_from=marks.get(daterange[0]),
-        date_to=marks.get(daterange[1]),
-        countries=countries,
-    )
-
-    filter_df["count"] = filter_df[ycol]
-
-    click = alt.selection_multi(fields=["location"], bind="legend")
-
-    chart = (
-        alt.Chart(filter_df)
-        .mark_line()
-        .transform_window(
-            rolling_mean="mean(count)",
-            frame=[-7, 0],
-            groupby=["location"],
-        )
-        .encode(
-            y=alt.Y(
-                "rolling_mean:Q",
-                scale=alt.Scale(domainMin=0, type=scale),
-                title=ycol,
-            ),
-            x="date",
-            tooltip=["location", alt.Tooltip(ycol, title="count")],
-            color=alt.Color(
-                "location",
-                legend=alt.Legend(
-                    title="Country",
-                    orient="none",
-                    direction="horizontal",
-                    legendX=0,
-                    columns=4,
-                    legendY=-50,
-                ),
-            ),
-            opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
-        )
-        .properties(width=400, height=300, title=f"Country Data for {ycol}")
         .add_selection(click)
         .interactive()
         .configure_title(
