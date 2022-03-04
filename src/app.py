@@ -91,16 +91,16 @@ feature_dropdown = dcc.Dropdown(
         },
         {"label": "Daily deaths", "value": "new_deaths"},
         {"label": "Daily deaths per million people", "value": "new_deaths_per_million"},
-        #{"label": "Current ICU patients", "value": "icu_patients"},
-        #{
+        # {"label": "Current ICU patients", "value": "icu_patients"},
+        # {
         #    "label": "Current ICU patients per million people",
         #    "value": "icu_patients_per_million",
-        #},
-        #{"label": "Current hospitalisation", "value": "hosp_patients"},
-        #{
+        # },
+        # {"label": "Current hospitalisation", "value": "hosp_patients"},
+        # {
         #    "label": "Current hospitalisation per million people",
         #    "value": "hosp_patients_per_million",
-        #},
+        # },
         # {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
         # {
         #    "label": "Weekly ICU admissions per million people",
@@ -699,13 +699,12 @@ def update_output(value):
 @app.callback(
     Output("chart_1", "srcDoc"),
     [
-        Input("feature_dropdown", "value"),
         Input("country-selector", "value"),
         Input("date_slider", "value"),
         Input("scale-charts-radio", "value"),
     ],
 )
-def plot_chart_1(ycol, countries, daterange, scale):
+def plot_chart_1(countries, daterange, scale):
 
     if daterange is None:
         daterange.append(0)
@@ -718,7 +717,7 @@ def plot_chart_1(ycol, countries, daterange, scale):
         countries=countries,
     )
 
-    filter_df["count"] = filter_df[ycol]
+    filter_df["count"] = filter_df["people_fully_vaccinated"] / 1000000
 
     click = alt.selection_multi(fields=["location"], bind="legend")
 
@@ -734,10 +733,13 @@ def plot_chart_1(ycol, countries, daterange, scale):
             y=alt.Y(
                 "rolling_mean:Q",
                 scale=alt.Scale(domainMin=0, type=scale),
-                title=ycol,
+                title="People fully vaccinated",
             ),
             x="date",
-            tooltip=["location", alt.Tooltip(ycol, title="count")],
+            tooltip=[
+                "location",
+                alt.Tooltip("people_fully_vaccinated", title="People fully vaccinated"),
+            ],
             color=alt.Color(
                 "location",
                 legend=alt.Legend(
@@ -751,7 +753,9 @@ def plot_chart_1(ycol, countries, daterange, scale):
             ),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
-        .properties(width=400, height=300, title=f"Country Data for {ycol}")
+        .properties(
+            width=400, height=300, title=f"Country Data for people fully vaccinated"
+        )
         .add_selection(click)
         .interactive()
         .configure_title(
@@ -767,13 +771,14 @@ def plot_chart_1(ycol, countries, daterange, scale):
 @app.callback(
     Output("chart_2", "srcDoc"),
     [
-        Input("feature_dropdown", "value"),
         Input("country-selector", "value"),
         Input("date_slider", "value"),
         Input("scale-charts-radio", "value"),
     ],
 )
-def plot_chart_2(ycol, countries, daterange, scale):
+def plot_chart_2(countries, daterange, scale):
+
+    ycol = "icu_patients_per_million"
 
     if daterange is None:
         daterange.append(0)
@@ -786,7 +791,7 @@ def plot_chart_2(ycol, countries, daterange, scale):
         countries=countries,
     )
 
-    filter_df["count"] = filter_df[ycol]
+    filter_df["count"] = filter_df["icu_patients_per_million"]
 
     click = alt.selection_multi(fields=["location"], bind="legend")
 
@@ -802,10 +807,13 @@ def plot_chart_2(ycol, countries, daterange, scale):
             y=alt.Y(
                 "rolling_mean:Q",
                 scale=alt.Scale(domainMin=0, type=scale),
-                title=ycol,
+                title="ICU patients per million",
             ),
             x="date",
-            tooltip=["location", alt.Tooltip(ycol, title="count")],
+            tooltip=[
+                "location",
+                alt.Tooltip("icu_patients_per_million", title="count"),
+            ],
             color=alt.Color(
                 "location",
                 legend=alt.Legend(
@@ -819,7 +827,11 @@ def plot_chart_2(ycol, countries, daterange, scale):
             ),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
-        .properties(width=400, height=300, title=f"Country Data for {ycol}")
+        .properties(
+            width=400,
+            height=300,
+            title=f"Country Data for ICU patients per million people",
+        )
         .add_selection(click)
         .interactive()
         .configure_title(
@@ -835,13 +847,12 @@ def plot_chart_2(ycol, countries, daterange, scale):
 @app.callback(
     Output("chart_3", "srcDoc"),
     [
-        Input("feature_dropdown", "value"),
         Input("country-selector", "value"),
         Input("date_slider", "value"),
         Input("scale-charts-radio", "value"),
     ],
 )
-def plot_chart_3(ycol, countries, daterange, scale):
+def plot_chart_3(countries, daterange, scale):
 
     if daterange is None:
         daterange.append(0)
@@ -854,7 +865,7 @@ def plot_chart_3(ycol, countries, daterange, scale):
         countries=countries,
     )
 
-    filter_df["count"] = filter_df[ycol]
+    filter_df["count"] = filter_df["hosp_patients_per_million"]
 
     click = alt.selection_multi(fields=["location"], bind="legend")
 
@@ -870,10 +881,13 @@ def plot_chart_3(ycol, countries, daterange, scale):
             y=alt.Y(
                 "rolling_mean:Q",
                 scale=alt.Scale(domainMin=0, type=scale),
-                title=ycol,
+                title="Hospitalized patients per million",
             ),
             x="date",
-            tooltip=["location", alt.Tooltip(ycol, title="count")],
+            tooltip=[
+                "location",
+                alt.Tooltip("hosp_patients_per_million", title="count"),
+            ],
             color=alt.Color(
                 "location",
                 legend=alt.Legend(
@@ -887,7 +901,11 @@ def plot_chart_3(ycol, countries, daterange, scale):
             ),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
-        .properties(width=400, height=300, title=f"Country Data for {ycol}")
+        .properties(
+            width=400,
+            height=300,
+            title=f"Country Data for hospitalized patients per million people",
+        )
         .add_selection(click)
         .interactive()
         .configure_title(
