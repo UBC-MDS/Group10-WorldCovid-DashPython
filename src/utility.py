@@ -1,6 +1,8 @@
 import pandas as pd
 from datetime import datetime
 import time
+from dash import Dash, html, dcc, Input, Output
+import dash_bootstrap_components as dbc
 
 
 def get_data(date_from=None, date_to=None, location=None):
@@ -60,7 +62,7 @@ def get_data(date_from=None, date_to=None, location=None):
     return df.sort_values("date")
 
 
-def filter_data(df, date_from=None, date_to=None, countries=None):
+def filter_data(df, date_from=None, date_to=None, countries="all"):
     """filter covid data
     Filter covid data in pandas dataframe format
     with the time periods and countries provided.
