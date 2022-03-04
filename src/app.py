@@ -216,31 +216,7 @@ map_tab = (
             ),
             html.B("Indicator:"),
             html.P(
-                "Select one of the following:",
-            ),
-            html.P(
-                "Total confirmed cases: Number of total confirmed cases of COVID-19 to date",
-            ),
-            html.P(
-                "Total confirmed cases per million people: Number of total confirmed cases of COVID-19 to date, per million people",
-            ),
-            html.P(
-                "Daily confirmed cases: Number of confirmed daily cases of COVID-19",
-            ),
-            html.P(
-                "Daily confirmed cases per million people: Number of confirmed daily cases of COVID-19, per million people",
-            ),
-            html.P(
-                "Total deaths: Number of total confirmed deaths due to COVID-19 to date",
-            ),
-            html.P(
-                "Total deaths per million people: Number of total confirmed deaths due to COVID-19 to date, per million people",
-            ),
-            html.P(
-                "Daily deaths: Number of total confirmed daily deaths due to COVID-19",
-            ),
-            html.P(
-                "Daily deaths per million people: Number of total confirmed daily deaths due to COVID-19, per million people",
+                "Select an indicator to explore on the map and line plot using the dropdown below.",
             ),
             html.Br(),
             html.Br(),
