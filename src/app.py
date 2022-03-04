@@ -319,7 +319,7 @@ charts_tab = (
                         style={"font-size": "25px"},
                     ),
                     html.P(
-                        "Shows the new number of people vaccinated per million for the selected countries, for the first date of the selected timeline.",
+                        "Shows the number of people newly vaccinated per million for the selected countries, for the first date of the selected timeline.",
                     ),
                     dcc.Loading(
                         html.Iframe(
