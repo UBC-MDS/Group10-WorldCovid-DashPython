@@ -194,7 +194,7 @@ sidebar = dbc.Col(
             html.Br(),
         ],
     ),
-    width=3,
+    width=2,
     style={
         "border-width": "0",
         "backgroundColor": "#A0C0C6",
@@ -302,15 +302,15 @@ charts_tab = (
                             style={
                                 "display": "block",
                                 "overflow": " hidden",
-                                "margin": "auto",
+                                # "margin": "auto",
                                 "border-width": "0",
-                                "width": "1500px",
+                                "width": "550px",
                                 "height": "500px",
                             },
                         ),
                     ),
                 ],
-                width=6,
+                #    width=5,
             ),
             dbc.Col(
                 [
@@ -327,15 +327,15 @@ charts_tab = (
                             style={
                                 "display": "block",
                                 "overflow": " hidden",
-                                "margin": "auto",
+                                # "margin": "auto",
                                 "border-width": "0",
-                                "width": "1500px",
+                                "width": "550px",
                                 "height": "500px",
                             },
                         ),
                     ),
                 ],
-                width=6,
+                #  width=4,
             ),
         ]
     ),
@@ -356,15 +356,15 @@ charts_tab = (
                             style={
                                 "display": "block",
                                 "overflow": " hidden",
-                                "margin": "auto",
+                                # "margin": "auto",
                                 "border-width": "0",
-                                "width": "1500px",
+                                "width": "550px",
                                 "height": "500px",
                             },
                         ),
                     ),
                 ],
-                width=6,
+                # width=5,
             ),
             dbc.Col(
                 [
@@ -381,15 +381,15 @@ charts_tab = (
                             style={
                                 "display": "block",
                                 "overflow": " hidden",
-                                "margin": "auto",
+                                # "margin": "auto",
                                 "border-width": "0",
-                                "width": "1500px",
+                                "width": "550px",
                                 "height": "500px",
                             },
                         ),
                     ),
                 ],
-                width=6,
+                # width=4,
             ),
         ]
     ),
@@ -438,7 +438,7 @@ app.layout = dbc.Container(
                     )
                 ],
                 # style={"width": "80%"},
-                width=9,
+                width=10,
             ),
         ]
     ),
@@ -738,7 +738,17 @@ def plot_chart_1(ycol, countries, daterange, scale):
             ),
             x="date",
             tooltip=["location", alt.Tooltip(ycol, title="count")],
-            color=alt.Color("location"),
+            color=alt.Color(
+                "location",
+                legend=alt.Legend(
+                    title="Country",
+                    orient="none",
+                    direction="horizontal",
+                    legendX=0,
+                    legendY=-50,
+                    columns=4,
+                ),
+            ),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(width=400, height=300, title=f"Country Data for {ycol}")
@@ -796,7 +806,17 @@ def plot_chart_2(ycol, countries, daterange, scale):
             ),
             x="date",
             tooltip=["location", alt.Tooltip(ycol, title="count")],
-            color=alt.Color("location"),
+            color=alt.Color(
+                "location",
+                legend=alt.Legend(
+                    title="Country",
+                    orient="none",
+                    direction="horizontal",
+                    legendX=0,
+                    legendY=-50,
+                    columns=4,
+                ),
+            ),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(width=400, height=300, title=f"Country Data for {ycol}")
@@ -854,7 +874,17 @@ def plot_chart_3(ycol, countries, daterange, scale):
             ),
             x="date",
             tooltip=["location", alt.Tooltip(ycol, title="count")],
-            color=alt.Color("location"),
+            color=alt.Color(
+                "location",
+                legend=alt.Legend(
+                    title="Country",
+                    orient="none",
+                    direction="horizontal",
+                    legendX=0,
+                    legendY=-50,
+                    columns=4,
+                ),
+            ),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(width=400, height=300, title=f"Country Data for {ycol}")
@@ -912,7 +942,17 @@ def plot_chart_4(ycol, countries, daterange, scale):
             ),
             x="date",
             tooltip=["location", alt.Tooltip(ycol, title="count")],
-            color=alt.Color("location"),
+            color=alt.Color(
+                "location",
+                legend=alt.Legend(
+                    title="Country",
+                    orient="none",
+                    direction="horizontal",
+                    legendX=0,
+                    columns=4,
+                    legendY=-50,
+                ),
+            ),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(width=400, height=300, title=f"Country Data for {ycol}")
