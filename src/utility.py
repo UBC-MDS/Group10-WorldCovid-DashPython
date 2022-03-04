@@ -1,6 +1,8 @@
 import pandas as pd
 from datetime import datetime
 import time
+from dash import Dash, html, dcc, Input, Output
+import dash_bootstrap_components as dbc
 
 
 def get_data(date_from=None, date_to=None, location=None):
@@ -113,3 +115,110 @@ def filter_data(df, date_from=None, date_to=None, countries=None):
     df = df.query(query)
 
     return df.copy()
+
+
+feature_dropdown = dcc.Dropdown(
+    id="feature_dropdown_2",
+    value="new_cases_per_million",
+    options=[
+        {"label": "Total confirmed cases", "value": "total_cases"},
+        {
+            "label": "Total confirmed cases per million people",
+            "value": "total_cases_per_million",
+        },
+        {"label": "Daily confirmed cases", "value": "new_cases"},
+        {
+            "label": "Daily confirmed cases per million people",
+            "value": "new_cases_per_million",
+        },
+        {"label": "Total deaths", "value": "total_deaths"},
+        {
+            "label": "Total deaths per million people",
+            "value": "total_deaths_per_million",
+        },
+        {"label": "Daily deaths", "value": "new_deaths"},
+        {"label": "Daily deaths per million people", "value": "new_deaths_per_million"},
+        {"label": "Current ICU patients", "value": "icu_patients"},
+        {
+            "label": "Current ICU patients per million people",
+            "value": "icu_patients_per_million",
+        },
+        {"label": "Current hospitalisation", "value": "hosp_patients"},
+        {
+            "label": "Current hospitalisation per million people",
+            "value": "hosp_patients_per_million",
+        },
+        {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
+        {
+            "label": "Weekly ICU admissions per million people",
+            "value": "weekly_icu_admissions_per_million",
+        },
+        {
+            "label": "Weekly hospitalisation admission",
+            "value": "weekly_hosp_admissions",
+        },
+        {
+            "label": "Weekly hospitalisation admission per million people",
+            "value": "weekly_hosp_admissions_per_million",
+        },
+    ],
+    style={
+        "border-width": "0",
+        #        "width": "60%",
+        "height": "40px",
+        "backgroundColor": "white",
+    },
+)
+
+feature_dropdown_2 = dcc.Dropdown(
+    id="feature_dropdown_2",
+    value="new_cases_per_million",
+    options=[
+        {"label": "Total confirmed cases", "value": "total_cases"},
+        {
+            "label": "Total confirmed cases per million people",
+            "value": "total_cases_per_million",
+        },
+        {"label": "Daily confirmed cases", "value": "new_cases"},
+        {
+            "label": "Daily confirmed cases per million people",
+            "value": "new_cases_per_million",
+        },
+        {"label": "Total deaths", "value": "total_deaths"},
+        {
+            "label": "Total deaths per million people",
+            "value": "total_deaths_per_million",
+        },
+        {"label": "Daily deaths", "value": "new_deaths"},
+        {"label": "Daily deaths per million people", "value": "new_deaths_per_million"},
+        {"label": "Current ICU patients", "value": "icu_patients"},
+        {
+            "label": "Current ICU patients per million people",
+            "value": "icu_patients_per_million",
+        },
+        {"label": "Current hospitalisation", "value": "hosp_patients"},
+        {
+            "label": "Current hospitalisation per million people",
+            "value": "hosp_patients_per_million",
+        },
+        {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
+        {
+            "label": "Weekly ICU admissions per million people",
+            "value": "weekly_icu_admissions_per_million",
+        },
+        {
+            "label": "Weekly hospitalisation admission",
+            "value": "weekly_hosp_admissions",
+        },
+        {
+            "label": "Weekly hospitalisation admission per million people",
+            "value": "weekly_hosp_admissions_per_million",
+        },
+    ],
+    style={
+        "border-width": "0",
+        "width": "60%",
+        "height": "40px",
+        "backgroundColor": "white",
+    },
+)
