@@ -97,19 +97,19 @@ feature_dropdown = dcc.Dropdown(
             "label": "Current hospitalisation per million people",
             "value": "hosp_patients_per_million",
         },
-        {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
-        {
-            "label": "Weekly ICU admissions per million people",
-            "value": "weekly_icu_admissions_per_million",
-        },
-        {
-            "label": "Weekly hospitalisation admission",
-            "value": "weekly_hosp_admissions",
-        },
-        {
-            "label": "Weekly hospitalisation admission per million people",
-            "value": "weekly_hosp_admissions_per_million",
-        },
+        # {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
+        # {
+        #    "label": "Weekly ICU admissions per million people",
+        #    "value": "weekly_icu_admissions_per_million",
+        # },
+        # {
+        #    "label": "Weekly hospitalisation admission",
+        #    "value": "weekly_hosp_admissions",
+        # },
+        # {
+        #    "label": "Weekly hospitalisation admission per million people",
+        #    "value": "weekly_hosp_admissions_per_million",
+        # },
     ],
     style={
         "height": "40px",
