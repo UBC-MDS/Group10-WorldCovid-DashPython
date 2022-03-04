@@ -15,6 +15,10 @@ alt.data_transformers.disable_max_rows()
 
 df = get_data()
 daterange = [x for x in range(len(df["date"].unique()))]
+month_index = pd.date_range(
+    start=df["date"].dt.date.unique()[0], end=df["date"].dt.date.unique()[-1], freq="2M"
+)
+month_index = month_index - pd.offsets.MonthBegin()
 
 marks = {
     numd: date.strftime("%Y-%m-%d")
@@ -25,7 +29,7 @@ marks_display = {}
 marks_display.update(
     {
         0: {
-            "label": datetime.strptime(marks.get(0), "%Y-%m-%d").strftime("%y-%m-%d"),
+            "label": datetime.strptime(marks.get(0), "%Y-%m-%d").strftime("%y/%m"),
             "style": {
                 "color": "#77b0b1",
             },
@@ -36,11 +40,11 @@ marks_display.update(
 last_index = len(marks) - 1
 
 for key, item in marks.items():
-    if key != 0 and key % 60 == 0 and last_index - key > 30:
+    if key != 0 and item in month_index and last_index - key > 30 and key - 0 > 10:
         marks_display.update(
             {
                 key: {
-                    "label": datetime.strptime(item, "%Y-%m-%d").strftime("%y-%m-%d"),
+                    "label": datetime.strptime(item, "%Y-%m-%d").strftime("%y/%m"),
                     "style": {
                         "color": "#77b0b1",
                     },
@@ -53,7 +57,7 @@ marks_display.update(
     {
         last_index: {
             "label": datetime.strptime(marks.get(last_index), "%Y-%m-%d").strftime(
-                "%y-%m-%d"
+                "%y/%m"
             ),
             "style": {
                 "color": "#77b0b1",
