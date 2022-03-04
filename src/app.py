@@ -87,16 +87,69 @@ feature_dropdown = dcc.Dropdown(
     },
 )
 
+feature_dropdown_2 = dcc.Dropdown(
+    id="feature_dropdown_2",
+    value="new_cases_per_million",
+    options=[
+        {"label": "Total confirmed cases", "value": "total_cases"},
+        {
+            "label": "Total confirmed cases per million people",
+            "value": "total_cases_per_million",
+        },
+        {"label": "Daily confirmed cases", "value": "new_cases"},
+        {
+            "label": "Daily confirmed cases per million people",
+            "value": "new_cases_per_million",
+        },
+        {"label": "Total deaths", "value": "total_deaths"},
+        {
+            "label": "Total deaths per million people",
+            "value": "total_deaths_per_million",
+        },
+        {"label": "Daily deaths", "value": "new_deaths"},
+        {"label": "Daily deaths per million people", "value": "new_deaths_per_million"},
+        {"label": "Current ICU patients", "value": "icu_patients"},
+        {
+            "label": "Current ICU patients per million people",
+            "value": "icu_patients_per_million",
+        },
+        {"label": "Current hospitalisation", "value": "hosp_patients"},
+        {
+            "label": "Current hospitalisation per million people",
+            "value": "hosp_patients_per_million",
+        },
+        {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
+        {
+            "label": "Weekly ICU admissions per million people",
+            "value": "weekly_icu_admissions_per_million",
+        },
+        {
+            "label": "Weekly hospitalisation admission",
+            "value": "weekly_hosp_admissions",
+        },
+        {
+            "label": "Weekly hospitalisation admission per million people",
+            "value": "weekly_hosp_admissions_per_million",
+        },
+    ],
+    style={
+        "border-width": "0",
+        "width": "60%",
+        "height": "40px",
+        "backgroundColor": "white",
+    },
+)
+
 
 # Setup app and layout/ frontend
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
 server = app.server
 
 app.layout = dbc.Container(
     [
         html.H1(
-            "World Covid App",
+            "World Covid-19 App",
             style={
                 "border-width": "1",
                 "width": "100%",
@@ -108,17 +161,10 @@ app.layout = dbc.Container(
             [
                 dbc.Col(
                     [
-                        dcc.RadioItems(
-                            id="scale_radio",
-                            options=[
-                                {"label": "Linear", "value": "linear"},
-                                {"label": "Log", "value": "symlog"},
-                            ],
-                            value="linear",
-                        )
+
                     ],
                     md=2,
-                    style={"border-width": "0", "width": "100%"},
+                    style={"border-width": "1", "width": "100%"},
                 ),
                 dbc.Col(
                     [
@@ -142,6 +188,16 @@ app.layout = dbc.Container(
             [
                 dbc.Col(
                     [
+                        html.H5("Linear/Log Selector"),
+                        dcc.RadioItems(
+                            id="scale_radio",
+                            options=[
+                                {"label": "Linear", "value": "linear"},
+                                {"label": "Log", "value": "symlog"},
+                            ],
+                            value="linear",
+                        ),
+
                         html.H5("Country Selector"),
                         dcc.Dropdown(
                             id="country_select",
@@ -152,19 +208,6 @@ app.layout = dbc.Container(
                             ],
                             value=[
                                 "Canada",
-                                "United States",
-                                "United Kingdom",
-                                "Netherlands",
-                                "Ireland",
-                                "Italy",
-                                "Australia",
-                                "China",
-                                "Europe",
-                                "Asia",
-                                "South America",
-                                "North America",
-                                "Africa",
-                                "Oceania",
                                 "World",
                             ],
                         ),
@@ -183,7 +226,15 @@ app.layout = dbc.Container(
                                                 id="map_plot",
                                                 figure={},
                                                 style={"height": "70vh"},
-                                            ),
+                                            )
+                                        ]
+                                    ),
+                                    label="World Map",
+                                ),
+                                dcc.Tab(
+                                    dbc.Col(
+                                        [
+                                            feature_dropdown_2,
                                             html.Iframe(
                                                 id="line_plot",
                                                 style={
@@ -194,11 +245,13 @@ app.layout = dbc.Container(
                                             ),
                                         ]
                                     ),
-                                    label="Map",
+                                    label="COVID-19 Indicators",
                                 ),
-                                dcc.Tab("Plots", label="Plot"),
+                                dcc.Tab(
+                                    label="Vaccination Indicators",
+                                ),
                             ],
-                            style={"width": "15%"},
+                            style={"width": "100%"},
                         ),
                         html.H5("Date selected"),
                         html.Div(id="date_from_display"),
@@ -227,7 +280,7 @@ app.layout = dbc.Container(
 @app.callback(
     Output("line_plot", "srcDoc"),
     [
-        Input("feature_dropdown", "value"),
+        Input("feature_dropdown_2", "value"),
         Input("country_select", "value"),
         Input("date_slider", "value"),
         Input("scale_radio", "value"),
@@ -268,10 +321,21 @@ def plot_line(ycol, countries, daterange, scale):
             tooltip=["location", alt.Tooltip(ycol, title="count")],
             color=alt.Color("location"),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
-        )
+        ).properties(
+            width=570,
+            height=300,
+            title = f"Country Data for {ycol}"
+            )       
         .add_selection(click)
         .interactive()
+        .configure_title(
+            fontSize=15,
+            anchor='start',
+            )
+
     )
+
+    
     return chart.to_html()
 
 
@@ -308,11 +372,11 @@ def plot_map(ycol, countries, daterange, scale):
         color=ycol,
         animation_frame="date_str",
         animation_group=ycol,
-        color_continuous_scale=px.colors.sequential.Sunset_r,
+        color_continuous_scale=px.colors.sequential.deep,
     )
 
     fig.update_layout(
-        title_text="Covid-19 Map",
+        title_text="World Map",
         geo=dict(
             showframe=False, showcoastlines=False, projection_type="equirectangular"
         ),
