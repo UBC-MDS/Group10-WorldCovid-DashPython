@@ -120,6 +120,57 @@ feature_dropdown = dcc.Dropdown(
     },
 )
 
+
+feature_dropdown2 = dcc.Dropdown(
+    id="feature_dropdown2",
+    value="new_cases_per_million",
+    options=[
+        {"label": "Total confirmed cases", "value": "total_cases"},
+        {
+            "label": "Total confirmed cases per million people",
+            "value": "total_cases_per_million",
+        },
+        {"label": "Daily confirmed cases", "value": "new_cases"},
+        {
+            "label": "Daily confirmed cases per million people",
+            "value": "new_cases_per_million",
+        },
+        {"label": "Total deaths", "value": "total_deaths"},
+        {
+            "label": "Total deaths per million people",
+            "value": "total_deaths_per_million",
+        },
+        {"label": "Daily deaths", "value": "new_deaths"},
+        {"label": "Daily deaths per million people", "value": "new_deaths_per_million"},
+        # {"label": "Current ICU patients", "value": "icu_patients"},
+        # {
+        #    "label": "Current ICU patients per million people",
+        #    "value": "icu_patients_per_million",
+        # },
+        # {"label": "Current hospitalisation", "value": "hosp_patients"},
+        # {
+        #    "label": "Current hospitalisation per million people",
+        #    "value": "hosp_patients_per_million",
+        # },
+        # {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
+        # {
+        #    "label": "Weekly ICU admissions per million people",
+        #    "value": "weekly_icu_admissions_per_million",
+        # },
+        # {
+        #    "label": "Weekly hospitalisation admission",
+        #    "value": "weekly_hosp_admissions",
+        # },
+        # {
+        #    "label": "Weekly hospitalisation admission per million people",
+        #    "value": "weekly_hosp_admissions_per_million",
+        # },
+    ],
+    style={
+        "height": "40px",
+    },
+)
+
 # Date slider
 date_slider = dcc.RangeSlider(
     id="date_slider",
@@ -156,7 +207,7 @@ country_selector = dcc.Dropdown(
     id="country-selector",
     multi=True,
     options=[{"label": x, "value": x} for x in df.location.sort_values().unique()],
-    value=["Canada", "United States", "United Kingdom", "Singapore", "South Africa"],
+    value=["Canada", "United States", "United Kingdom", "France", "South Africa"],
 )
 
 ### Selection module ends
@@ -168,22 +219,22 @@ sidebar = dbc.Col(
     dbc.Row(
         [
             html.Br(),
+            html.P(" "),
+            html.P(" "),
             html.H3(
-                "World Covid-19 Dashboard",
+                "World COVID-19 Dashboard", style = {"font": "Helvetica", "font-size": "25px", "text-align":"center"}
             ),
+            html.P(" "),
+            html.P(" "),
             html.Br(),
             html.Br(),
             html.P(
                 "Explore the global situation of COVID-19 using this interactive dashboard. Compare selected countries and indicators across different date ranges to observe the effect of policy, and vaccination rate.",
-            ),
-            html.P(
-                "Filter charts with following:",
-                style={"font-size": "20px"},
-            ),
+            style = {"text-align": "justify"}),
             html.Hr(),
             html.Br(),
             html.Br(),
-            html.B("Country:"),
+            html.B("Country Filter"),
             html.P(
                 "Use this filter to add or remove a country from the analysis",
             ),
@@ -197,7 +248,7 @@ sidebar = dbc.Col(
     width=2,
     style={
         "border-width": "0",
-        "backgroundColor": "#A0C0C6",
+        "backgroundColor": "#d3e9ff",
         # "min-height": "100vh",
         # "min-width": "1300px",
     },
@@ -207,8 +258,9 @@ sidebar = dbc.Col(
 map_tab = (
     dbc.Row(
         [
+            html.P(" "),
             html.P(
-                "Animated World Map:",
+                "Animated World Map",
                 style={"font-size": "25px"},
             ),
             html.P(
@@ -231,35 +283,42 @@ map_tab = (
             ),
         )
     ),
+
+)
+
+
+
+# Line Tab
+line_tab = (
     dbc.Row(
         [
-            html.Br(),
-            html.Br(),
             html.P(" "),
             html.P(
-                "Line Plot:",
+                "Line Plot",
                 style={"font-size": "25px"},
             ),
             html.P(
                 "The line plot below depicts the selected COVID-19 indicator for the selected countries over the date range selected by the slider above. Click the legend to highlight particular countries.",
             ),
-            html.B("Data Scale:"),
+            html.B("Indicator:"),
             html.P(
-                "Use the radio buttons below to change the data in the visualizations to a linear or log scale.",
+                "Select an indicator to explore on the line plot using the dropdown below.",
             ),
+            feature_dropdown2,
             html.P(" "),
-            html.Br(),
-            scale_map_line_radio,
+        
             dbc.Col(
-                html.P(
+                [html.P(
                     " ",
                 ),
-                width=2,
+                html.B("Data Scale"),
+                scale_map_line_radio],
+                width=1,
             ),
             dbc.Col(
                 dcc.Loading(
                     html.Iframe(
-                        id="map_line_chart",
+                        id="line_chart",
                         style={
                             "height": "70vh",
                             "width": "100%",
@@ -267,10 +326,13 @@ map_tab = (
                         },
                     ),
                 )
-            ),
+            )
+
         ]
-    ),
+    )
+    
 )
+
 
 
 # Charts Tab
@@ -282,15 +344,15 @@ charts_tab = (
             html.P(
                 "Use the radio buttons below to change the data in the visualizations to a linear or log scale.",
             ),
-            html.P(" "),
             html.Br(),
             scale_charts_radio,
+            html.P(" "),
             html.Br(),
             html.Br(),
             dbc.Col(
                 [
                     html.P(
-                        "Total vaccinations by country:",
+                        "Total Vaccinations",
                         style={"font-size": "25px"},
                     ),
                     html.P(
@@ -315,7 +377,7 @@ charts_tab = (
             dbc.Col(
                 [
                     html.P(
-                        "New vaccinations by country:",
+                        "New Vaccinations",
                         style={"font-size": "25px"},
                     ),
                     html.P(
@@ -340,7 +402,7 @@ charts_tab = (
             dbc.Col(
                 [
                     html.P(
-                        "Current ICU hospitalizations:",
+                        "Current ICU Hospitalizations",
                         style={"font-size": "25px"},
                     ),
                     html.P(
@@ -365,7 +427,7 @@ charts_tab = (
             dbc.Col(
                 [
                     html.P(
-                        "Current hospitalizations:",
+                        "Current Hospitalizations",
                         style={"font-size": "25px"},
                     ),
                     html.P(
@@ -413,21 +475,29 @@ app.layout = dbc.Container(
                             ),
                             html.Br(),
                             html.Br(),
+                            html.P(" "),
                             date_slider,
                             html.Br(),
                             html.Br(),
+                            html.P(" "),
                             dbc.Tabs(
                                 [
                                     dbc.Tab(
                                         map_tab,
-                                        label="Global COVID-19 Indicators",
+                                        label="Global COVID-19 Map",
                                         tab_id="map-tab",
+                                    ),
+                                    dbc.Tab(
+                                        line_tab,
+                                        label="Global COVID-19 Plot",
+                                        tab_id="line-tab",
                                     ),
                                     dbc.Tab(
                                         charts_tab,
                                         label="Vaccination and Hospitalization Indicators",
                                         tab_id="charts-tab",
-                                    ),
+                                    )
+  
                                 ]
                             ),
                         ]
@@ -621,9 +691,9 @@ def plot_map(ycol, countries, daterange):
 
 # Map line chart
 @app.callback(
-    Output("map_line_chart", "srcDoc"),
+    Output("line_chart", "srcDoc"),
     [
-        Input("feature_dropdown", "value"),
+        Input("feature_dropdown2", "value"),
         Input("country-selector", "value"),
         Input("date_slider", "value"),
         Input("scale-map-line-radio", "value"),
@@ -665,13 +735,14 @@ def plot_map_line_chart(ycol, countries, daterange, scale):
             color=alt.Color("location"),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
-        .properties(width=570, height=300, title=f"Country Data for {ycol}")
+        .properties(width=800, height=400, title=f"Country Data for {ycol}") # 
         .add_selection(click)
         .interactive()
         .configure_title(
             fontSize=15,
             anchor="start",
-        )
+         
+        ).configure_legend(title = None) 
     )
 
     return chart.to_html()
@@ -679,7 +750,7 @@ def plot_map_line_chart(ycol, countries, daterange, scale):
 
 @app.callback(Output("date_display", "children"), Input("date_slider", "value"))
 def update_output(value):
-    template = "Date range: {} to {}"
+    template = " Date range: {} to {}"
 
     if value is None:
         value = []
@@ -750,7 +821,7 @@ def plot_chart_1(countries, daterange, scale):
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(
-            width=400, height=300, title=f"Country Data for people fully vaccinated"
+            width=450, height=300, #title=f"Country Data for people fully vaccinated"
         )
         .add_selection(click)
         .interactive()
@@ -821,7 +892,7 @@ def plot_chart_2(countries, daterange, scale):
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(
-            width=400, height=300, title=f"Country Data for people newly vaccinated"
+            width=450, height=300, #title=f"Country Data for people newly vaccinated"
         )
         .add_selection(click)
         .interactive()
@@ -895,9 +966,9 @@ def plot_chart_3(countries, daterange, scale):
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(
-            width=400,
+            width=450,
             height=300,
-            title=f"Country Data for ICU patients per million people",
+            #title=f"Country Data for ICU patients per million people",
         )
         .add_selection(click)
         .interactive()
@@ -969,9 +1040,9 @@ def plot_chart_4(countries, daterange, scale):
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(
-            width=400,
+            width=450,
             height=300,
-            title=f"Country Data for hospitalized patients per million people",
+            #title=f"Country Data for hospitalized patients per million people",
         )
         .add_selection(click)
         .interactive()
