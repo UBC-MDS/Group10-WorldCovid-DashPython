@@ -207,7 +207,7 @@ country_selector = dcc.Dropdown(
     id="country-selector",
     multi=True,
     options=[{"label": x, "value": x} for x in df.location.sort_values().unique()],
-    value=["Canada", "United States", "United Kingdom", "France", "South Africa"],
+    value=["Canada", "United States", "United Kingdom", "France", "Singapore"],
 )
 
 ### Selection module ends
