@@ -15,9 +15,9 @@ Many COVID related policies such as strict travel measures, testing procedures, 
 
 ## The Solution
 To address this challenge, we have built the World COVID-19 Dashboard app that:
-- vizualises key data indicators about COVID 19 such as deaths, hospitalizations and vaccination numbers, allowing users to explore and quickly understand the current state of the pandemic situation globally
-- allows for comparison across nations, and adjustable timelines to suit the curiosity of the user
-- vizualizes data over time and across different countries in an engaging and tangible way with customizations and animations
+- vizualises key data indicators about COVID 19 such as deaths, hospitalizations and vaccination numbers, allowing users to explore and quickly understand the current state of the pandemic situation globally;
+- allows for comparison across nations, and adjustable timelines to suit the curiosity of the user;
+- and vizualizes data over time and across different countries in an engaging and tangible way with customizations and animations.
 
 ## Who are we?
 
