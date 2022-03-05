@@ -15,9 +15,9 @@ Many COVID related policies such as strict travel measures, testing procedures, 
 
 ## The Solution
 To address this challenge, we have built the World COVID-19 Dashboard app that:
-- vizualises key data indicators about COVID 19 such as deaths, hospitalizations and vaccination numbers, allowing users to explore and quickly understand the current state of the pandemic situation globally;
+- visualizes key data indicators about COVID 19 such as deaths, hospitalizations and vaccination numbers, allowing users to explore and quickly understand the current state of the pandemic situation globally;
 - allows for comparison across nations, and adjustable timelines to suit the curiosity of the user;
-- and vizualizes data over time and across different countries in an engaging and tangible way with customizations and animations.
+- and visualizes data over time and across different countries in an engaging and tangible way with customization and animations.
 
 ## Who are we?
 
@@ -27,13 +27,13 @@ We are group 10 from DSCI 532. Please read the contributors section for more inf
 Our app consists of three main tabs: Global COVID-19 Map, Global COVID-19 Plot, and Vaccination and Hospitalization Indicators.
 
 Global COVID-19 Map:
- - This tab aims to give a "global overview" of the COVID-19 situation through the lense of an animated map that highlights selected countries for a selected indicator. This visualization is filtered using the "Indicator" drop down, the "Country Filter" to select which countries are showcased, and the "Date range" slider at the top of the screen that limits or expands the visiualized timeline. A main focus of this tab is the animation in the map, which when "played" shows the change in data over time by country. This element is expecially important as it tells a story of where the world started, where it went, and how far it has come in a very tangible way.
+ - This tab aims to give a "global overview" of the COVID-19 situation through the lens of an animated map that highlights selected countries for a selected indicator. This visualization is filtered using the "Indicator" drop down, the "Country Filter" to select which countries are showcased, and the "Date range" slider at the top of the screen that limits or expands the visualized timeline. A main focus of this tab is the animation in the map, which when "played" shows the change in data over time by country. This element is especially important as it tells a story of where the world started, where it went, and how far it has come in a very tangible way.
 
 Global COVID-19 Plot:  
-- This tab allows the user to explore an indicator of interest in the form of a line plot. This visualization is filtered using the "Indicator" drop down, the "Country Filter" to select which countries are showcased, and the "Date range" slider at the top of the screen that limits or expands the visiualized timeline. The data type can be shown as either linear or log using the "Data Scale" radio buttons to suit the curiosity of the user. Countries within the plot can be highlighted be selecting them in the legend.
+- This tab allows the user to explore an indicator of interest in the form of a line plot. This visualization is filtered using the "Indicator" drop down, the "Country Filter" to select which countries are showcased, and the "Date range" slider at the top of the screen that limits or expands the visualized timeline. The data type can be shown as either linear or log using the "Data Scale" radio buttons to suit the curiosity of the user. Countries within the plot can be highlighted be selecting them in the legend.
 
 Vaccination and Hospitalization:
-- This tab aims to give a sense of the movement of vaccinaction rates and hospitalizations, and how that differed between nations throughout the pandemic. It consists of four line charts; "Total Vaccinations", "New Vaccinations", "Current ICU", and "Current Hospitalizations". Simialr to the first tab, the charts are filtered by the "Country Filter" to select which countries are showcased, and the "Date range" slider at the top of the screen that limits or expands the visiualized timeline. The data type can be shown as either linear or log using the "Data Scale" radio buttons to suit the curiosity of the user.
+- This tab aims to give a sense of the movement of vaccination rates and hospitalizations, and how that differed between nations throughout the pandemic. It consists of four line charts; "Total Vaccinations", "New Vaccinations", "Current ICU", and "Current Hospitalizations". Similar to the first tab, the charts are filtered by the "Country Filter" to select which countries are showcased, and the "Date range" slider at the top of the screen that limits or expands the visualized timeline. The data type can be shown as either linear or log using the "Data Scale" radio buttons to suit the curiosity of the user.
 
 ## Usage
 - Per the GIF below, our app is meant to be highly filterable and interactive and can be used multiple ways to suit the data needs of policy makers, public health communicators, and regular folks alike in the best way they see fit for the impacts they want to understand or the message they want to convey.
