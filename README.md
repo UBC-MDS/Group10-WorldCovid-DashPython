@@ -4,7 +4,7 @@
 
 Thank you for visitng the World COVID-19 Dashboard app project repository.
 
-Link to our app here: [](worldcovid-dashpy.herokuapp.com/) 
+Link to our app here: [worldcovid-dashpy.herokuapp.com/](worldcovid-dashpy.herokuapp.com/)
 
 ## The Problem
 
