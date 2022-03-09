@@ -222,7 +222,12 @@ sidebar = dbc.Col(
             html.P(" "),
             html.P(" "),
             html.H3(
-                "World COVID-19 Dashboard", style = {"font": "Helvetica", "font-size": "25px", "text-align":"center"}
+                "World COVID-19 Dashboard",
+                style={
+                    "font": "Helvetica",
+                    "font-size": "25px",
+                    "text-align": "center",
+                },
             ),
             html.P(" "),
             html.P(" "),
@@ -230,7 +235,8 @@ sidebar = dbc.Col(
             html.Br(),
             html.P(
                 "Explore the global situation of COVID-19 using this interactive dashboard. Compare selected countries and indicators across different date ranges to observe the effect of policy, and vaccination rate.",
-            style = {"text-align": "justify"}),
+                style={"text-align": "justify"},
+            ),
             html.Hr(),
             html.Br(),
             html.Br(),
@@ -283,56 +289,50 @@ map_tab = (
             ),
         )
     ),
-
 )
-
 
 
 # Line Tab
-line_tab = (
-    dbc.Row(
-        [
-            html.P(" "),
-            html.P(
-                "Line Plot",
-                style={"font-size": "25px"},
-            ),
-            html.P(
-                "The line plot below depicts the selected COVID-19 indicator for the selected countries over the date range selected by the slider above. Click the legend to highlight particular countries.",
-            ),
-            html.B("Indicator:"),
-            html.P(
-                "Select an indicator to explore on the line plot using the dropdown below.",
-            ),
-            feature_dropdown2,
-            html.P(" "),
-        
-            dbc.Col(
-                [html.P(
+line_tab = dbc.Row(
+    [
+        html.P(" "),
+        html.P(
+            "Line Plot",
+            style={"font-size": "25px"},
+        ),
+        html.P(
+            "The line plot below depicts the selected COVID-19 indicator for the selected countries over the date range selected by the slider above. Click the legend to highlight particular countries.",
+        ),
+        html.B("Indicator:"),
+        html.P(
+            "Select an indicator to explore on the line plot using the dropdown below.",
+        ),
+        feature_dropdown2,
+        html.P(" "),
+        dbc.Col(
+            [
+                html.P(
                     " ",
                 ),
                 html.B("Data Scale"),
-                scale_map_line_radio],
-                width=1,
-            ),
-            dbc.Col(
-                dcc.Loading(
-                    html.Iframe(
-                        id="line_chart",
-                        style={
-                            "height": "70vh",
-                            "width": "100%",
-                            "textAlign": "center",
-                        },
-                    ),
-                )
+                scale_map_line_radio,
+            ],
+            width=1,
+        ),
+        dbc.Col(
+            dcc.Loading(
+                html.Iframe(
+                    id="line_chart",
+                    style={
+                        "height": "70vh",
+                        "width": "100%",
+                        "textAlign": "center",
+                    },
+                ),
             )
-
-        ]
-    )
-    
+        ),
+    ]
 )
-
 
 
 # Charts Tab
@@ -456,7 +456,7 @@ charts_tab = (
 
 # Setup app and layout/ frontend
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
-
+app.title = "World COVID-19 Dashboard"
 server = app.server
 
 app.layout = dbc.Container(
@@ -496,8 +496,7 @@ app.layout = dbc.Container(
                                         charts_tab,
                                         label="Vaccination and Hospitalization Indicators",
                                         tab_id="charts-tab",
-                                    )
-  
+                                    ),
                                 ]
                             ),
                         ]
@@ -735,14 +734,14 @@ def plot_map_line_chart(ycol, countries, daterange, scale):
             color=alt.Color("location"),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
-        .properties(width=800, height=400, title=f"Country Data for {ycol}") # 
+        .properties(width=800, height=400, title=f"Country Data for {ycol}")  #
         .add_selection(click)
         .interactive()
         .configure_title(
             fontSize=15,
             anchor="start",
-         
-        ).configure_legend(title = None) 
+        )
+        .configure_legend(title=None)
     )
 
     return chart.to_html()
@@ -821,7 +820,8 @@ def plot_chart_1(countries, daterange, scale):
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(
-            width=450, height=300, #title=f"Country Data for people fully vaccinated"
+            width=450,
+            height=300,  # title=f"Country Data for people fully vaccinated"
         )
         .add_selection(click)
         .interactive()
@@ -832,6 +832,7 @@ def plot_chart_1(countries, daterange, scale):
     )
 
     return chart.to_html()
+
 
 # line chart 2
 @app.callback(
@@ -892,7 +893,8 @@ def plot_chart_2(countries, daterange, scale):
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(
-            width=450, height=300, #title=f"Country Data for people newly vaccinated"
+            width=450,
+            height=300,  # title=f"Country Data for people newly vaccinated"
         )
         .add_selection(click)
         .interactive()
@@ -968,7 +970,7 @@ def plot_chart_3(countries, daterange, scale):
         .properties(
             width=450,
             height=300,
-            #title=f"Country Data for ICU patients per million people",
+            # title=f"Country Data for ICU patients per million people",
         )
         .add_selection(click)
         .interactive()
@@ -1042,7 +1044,7 @@ def plot_chart_4(countries, daterange, scale):
         .properties(
             width=450,
             height=300,
-            #title=f"Country Data for hospitalized patients per million people",
+            # title=f"Country Data for hospitalized patients per million people",
         )
         .add_selection(click)
         .interactive()
