@@ -12,6 +12,7 @@ To run this app using Docker write the following commands after cloning the repo
 
 ```bash
 cd group10-worldcovid-dashpython
+docker-compose build
 docker-compose up -d
 ```
 Finally, open the app in the followin URL http://localhost:8000/
