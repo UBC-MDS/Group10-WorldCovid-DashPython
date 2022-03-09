@@ -35,6 +35,8 @@ To address this challenge, we have built the World COVID-19 Dashboard app that:
 We are group 10 from DSCI 532. Please read the contributors section for more information on our team.
 
 ## The App and Design
+For a full story on our app and design, please read our [proposal document]:books:(https://github.com/UBC-MDS/group10-worldcovid-dashpython/blob/main/docs/proposal.md)
+
 Our app consists of three main tabs: Global COVID-19 Map, Global COVID-19 Plot, and Vaccination and Hospitalization Indicators.
 
 **Global COVID-19 Map**:
