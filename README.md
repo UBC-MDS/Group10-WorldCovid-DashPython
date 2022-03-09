@@ -6,13 +6,13 @@ Thank you for visitng the World COVID-19 Dashboard app project repository.
 
 Link to our app here: [World COVID-19 Dashboard](https://worldcovid-dashpy.herokuapp.com/)
 
-## Run the app locally
+### Run the app locally
 
 To run this app using Docker write the following commands after cloning the repo:
 
 ```bash
 cd group10-worldcovid-dashpython
-docker-compose up
+docker-compose up -d
 ```
 Finally, open the app in the followin URL http://localhost:8000/
 
