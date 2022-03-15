@@ -191,6 +191,18 @@ scale_map_line_radio = dbc.RadioItems(
     inline=True,
 )
 
+points_option = dbc.RadioItems(
+    options=[
+        {"label": "No", "value": False},
+        {"label": "Yes", "value": True},
+    ],
+    value=False,
+    id="points_option",
+    inline=True,
+)
+
+
+
 # Data scale radio button for line charts in Charts tab
 scale_charts_radio = dbc.RadioItems(
     options=[
@@ -316,6 +328,12 @@ line_tab = dbc.Row(
                 ),
                 html.B("Data Scale"),
                 scale_map_line_radio,
+                html.P(
+                    " ",
+                ),
+                html.B("Add Points"),
+                points_option,
+
             ],
             width=1,
         ),
@@ -696,9 +714,10 @@ def plot_map(ycol, countries, daterange):
         Input("country-selector", "value"),
         Input("date_slider", "value"),
         Input("scale-map-line-radio", "value"),
+        Input("points_option", "value"),
     ],
 )
-def plot_map_line_chart(ycol, countries, daterange, scale):
+def plot_map_line_chart(ycol, countries, daterange, scale, points_option= False):
 
     if daterange is None:
         daterange.append(0)
@@ -715,7 +734,7 @@ def plot_map_line_chart(ycol, countries, daterange, scale):
 
     click = alt.selection_multi(fields=["location"], bind="legend")
 
-    chart = (
+    line = (
         alt.Chart(filter_df)
         .mark_line()
         .transform_window(
@@ -734,15 +753,40 @@ def plot_map_line_chart(ycol, countries, daterange, scale):
             color=alt.Color("location"),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
-        .properties(width=800, height=400, title=f"Country Data for {ycol}")  #
-        .add_selection(click)
-        .interactive()
-        .configure_title(
-            fontSize=15,
-            anchor="start",
-        )
-        .configure_legend(title=None)
     )
+
+
+    chart = None
+
+    points = (
+        alt.Chart(filter_df)
+        .mark_circle(size = 5, opacity = 0.4)
+        .encode(
+            y=alt.Y(
+                "count:Q",
+                scale=alt.Scale(domainMin=0, type=scale),
+                title=ycol,
+            ),
+            x="date",
+            tooltip=["location", alt.Tooltip(ycol, title="count")],
+            color=alt.Color("location"),
+            opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
+        )
+
+    )
+
+    if points_option == False:
+        chart = line.properties(width=800, height=400, title=f"Country Data for {ycol}").add_selection(click).interactive().configure_title(
+                fontSize=15,
+                anchor="start",
+            ).configure_legend(title=None)
+
+    elif points_option == True:
+        chart = alt.layer(points, line).properties(width=800, height=400, title=f"Country Data for {ycol}").add_selection(click).interactive().configure_title(
+                fontSize=15,
+                anchor="start",
+            ).configure_legend(title=None)
+
 
     return chart.to_html()
 
