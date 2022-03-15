@@ -402,11 +402,11 @@ charts_tab = (
             dbc.Col(
                 [
                     html.P(
-                        "Current ICU Hospitalizations",
+                        "Daily ICU Hospitalizations",
                         style={"font-size": "25px"},
                     ),
                     html.P(
-                        "Shows the current number of people per million admitted to the ICU for the selected countries, over the date range selected by the slider above.",
+                        "Shows the daily number of people per million admitted to the ICU for the selected countries, over the date range selected by the slider above.",
                     ),
                     dcc.Loading(
                         html.Iframe(
@@ -427,11 +427,11 @@ charts_tab = (
             dbc.Col(
                 [
                     html.P(
-                        "Current Hospitalizations",
+                        "Daily Hospitalizations",
                         style={"font-size": "25px"},
                     ),
                     html.P(
-                        "Shows the current number of people per million admitted to the hospital for the selected countries, over the date range selected by the slider above.",
+                        "Shows the daily number of people per million admitted to the hospital for the selected countries, over the date range selected by the slider above.",
                     ),
                     dcc.Loading(
                         html.Iframe(
