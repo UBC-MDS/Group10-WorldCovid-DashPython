@@ -242,15 +242,12 @@ sidebar = dbc.Col(
                 },
             ),
             html.P(" "),
-            html.P(" "),
-            html.Br(),
             html.Br(),
             html.P(
                 "Explore the global situation of COVID-19 using this interactive dashboard. Compare selected countries and indicators across different date ranges to observe the effect of policy, and vaccination rate.",
-                style={"text-align": "justify"},
+                style={"text-align": "left"},
             ),
             html.Hr(),
-            html.Br(),
             html.Br(),
             html.B("Country Filter"),
             html.P(
@@ -259,8 +256,34 @@ sidebar = dbc.Col(
             html.Br(),
             html.Br(),
             country_selector,
+            html.Hr(),
             html.Br(),
-            html.Br(),
+            html.Hr(),
+            html.B("Disclaimer"),
+            html.P(
+                "The World COVID-19 Dashboard was created by Adam Morphy, Kingslin Lv, Kristin Bunyan, and Thomas Siu.",
+                style={"text-align": "left"},
+            ),
+            html.Div(
+                [
+                    dcc.Markdown(
+                        """
+                    Source code is saved [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython).
+                    """
+                    ),
+                ],
+                style={"text-align": "left"},
+            ),
+            html.Div(
+                [
+                    dcc.Markdown(
+                        """
+                    Data source is from [here](https://github.com/owid/covid-19-data/tree/master/public/data).
+                    """
+                    ),
+                ],
+                style={"text-align": "left"},
+            ),
         ],
     ),
     width=2,
