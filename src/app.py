@@ -715,13 +715,13 @@ def plot_map(ycol, countries, daterange):
         animation_frame="date_str",
         animation_group=ycol,
         color_continuous_scale=px.colors.sequential.deep,
+        labels={ycol: " "}
     )
 
     fig.update_layout(
         geo=dict(
             showframe=False, showcoastlines=False, projection_type="equirectangular"
-        ),
-        legend={"title_text": ""}
+        )
     )
 
     fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 50
