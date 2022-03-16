@@ -242,15 +242,12 @@ sidebar = dbc.Col(
                 },
             ),
             html.P(" "),
-            html.P(" "),
-            html.Br(),
             html.Br(),
             html.P(
                 "Explore the global situation of COVID-19 using this interactive dashboard. Compare selected countries and indicators across different date ranges to observe the effect of policy, and vaccination rate.",
-                style={"text-align": "justify"},
+                style={"text-align": "left"},
             ),
             html.Hr(),
-            html.Br(),
             html.Br(),
             html.B("Country Filter"),
             html.P(
@@ -259,8 +256,34 @@ sidebar = dbc.Col(
             html.Br(),
             html.Br(),
             country_selector,
+            html.Hr(),
             html.Br(),
-            html.Br(),
+            html.Hr(),
+            html.B("Disclaimer"),
+            html.P(
+                "The World COVID-19 Dashboard was created by Adam Morphy, Kingslin Lv, Kristin Bunyan, and Thomas Siu.",
+                style={"text-align": "left"},
+            ),
+            html.Div(
+                [
+                    dcc.Markdown(
+                        """
+                    Source code is saved [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython).
+                    """
+                    ),
+                ],
+                style={"text-align": "left"},
+            ),
+            html.Div(
+                [
+                    dcc.Markdown(
+                        """
+                    Data source is from [here](https://github.com/owid/covid-19-data/tree/master/public/data).
+                    """
+                    ),
+                ],
+                style={"text-align": "left"},
+            ),
         ],
     ),
     width=2,
@@ -692,12 +715,13 @@ def plot_map(ycol, countries, daterange):
         animation_frame="date_str",
         animation_group=ycol,
         color_continuous_scale=px.colors.sequential.deep,
+        labels={ycol: " "}
     )
 
     fig.update_layout(
         geo=dict(
             showframe=False, showcoastlines=False, projection_type="equirectangular"
-        ),
+        )
     )
 
     fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 50
@@ -776,13 +800,13 @@ def plot_map_line_chart(ycol, countries, daterange, scale, points_option= False)
     )
 
     if points_option == False:
-        chart = line.properties(width=800, height=400, title=f"Country Data for {ycol}").add_selection(click).interactive().configure_title(
+        chart = line.properties(width=800, height=400).add_selection(click).interactive().configure_title(
                 fontSize=15,
                 anchor="start",
             ).configure_legend(title=None)
 
     elif points_option == True:
-        chart = alt.layer(points, line).properties(width=800, height=400, title=f"Country Data for {ycol}").add_selection(click).interactive().configure_title(
+        chart = alt.layer(points, line).properties(width=800, height=400).add_selection(click).interactive().configure_title(
                 fontSize=15,
                 anchor="start",
             ).configure_legend(title=None)
