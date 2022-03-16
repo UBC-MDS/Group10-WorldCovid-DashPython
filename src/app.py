@@ -91,29 +91,6 @@ feature_dropdown = dcc.Dropdown(
         },
         {"label": "Daily deaths", "value": "new_deaths"},
         {"label": "Daily deaths per million people", "value": "new_deaths_per_million"},
-        # {"label": "Current ICU patients", "value": "icu_patients"},
-        # {
-        #    "label": "Current ICU patients per million people",
-        #    "value": "icu_patients_per_million",
-        # },
-        # {"label": "Current hospitalisation", "value": "hosp_patients"},
-        # {
-        #    "label": "Current hospitalisation per million people",
-        #    "value": "hosp_patients_per_million",
-        # },
-        # {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
-        # {
-        #    "label": "Weekly ICU admissions per million people",
-        #    "value": "weekly_icu_admissions_per_million",
-        # },
-        # {
-        #    "label": "Weekly hospitalisation admission",
-        #    "value": "weekly_hosp_admissions",
-        # },
-        # {
-        #    "label": "Weekly hospitalisation admission per million people",
-        #    "value": "weekly_hosp_admissions_per_million",
-        # },
     ],
     style={
         "height": "40px",
@@ -142,29 +119,6 @@ feature_dropdown2 = dcc.Dropdown(
         },
         {"label": "Daily deaths", "value": "new_deaths"},
         {"label": "Daily deaths per million people", "value": "new_deaths_per_million"},
-        # {"label": "Current ICU patients", "value": "icu_patients"},
-        # {
-        #    "label": "Current ICU patients per million people",
-        #    "value": "icu_patients_per_million",
-        # },
-        # {"label": "Current hospitalisation", "value": "hosp_patients"},
-        # {
-        #    "label": "Current hospitalisation per million people",
-        #    "value": "hosp_patients_per_million",
-        # },
-        # {"label": "Weekly ICU admissions", "value": "weekly_icu_admissions"},
-        # {
-        #    "label": "Weekly ICU admissions per million people",
-        #    "value": "weekly_icu_admissions_per_million",
-        # },
-        # {
-        #    "label": "Weekly hospitalisation admission",
-        #    "value": "weekly_hosp_admissions",
-        # },
-        # {
-        #    "label": "Weekly hospitalisation admission per million people",
-        #    "value": "weekly_hosp_admissions_per_million",
-        # },
     ],
     style={
         "height": "40px",
@@ -326,7 +280,17 @@ line_tab = dbc.Row(
                 html.P(
                     " ",
                 ),
-                html.B("Data Scale"),
+                html.B([
+                html.Span(
+                    "Data Scale",
+                    id="tooltip-target",
+                    style={"textDecoration": "underline", "cursor": "pointer"},
+                    ), ]
+                    ),
+                dbc.Tooltip(
+                    "Use these buttons to change the data scale. Linear: shows the absolute change in value over time. Log: shows the relative change in value over time.",
+                    target="tooltip-target",
+                    ),
                 scale_map_line_radio,
                 html.P(
                     " ",
@@ -488,7 +452,18 @@ app.layout = dbc.Container(
                             html.P(
                                 " ",
                             ),
-                            html.B(
+                            html.B([
+                                html.Span(
+                                    "Data Slider",
+                                    id="tooltip-target2",
+                                    style={"textDecoration": "underline", "cursor": "pointer"},
+                                    ), ]
+                                    ),
+                            dbc.Tooltip(
+                                    "Use this slider to adjust the date range of the visualizations. The dates displayed below, are the boundaries of the timeline.",
+                                     target="tooltip-target2",
+                                    ),
+                            html.P(
                                 id="date_display",
                             ),
                             html.Br(),
@@ -527,136 +502,6 @@ app.layout = dbc.Container(
     ),
     fluid=True,
 )
-
-
-# app.layout = dbc.Container(
-#     [
-#         html.H1(
-#             "World Covid-19 App",
-#             style={
-#                 "border-width": "1",
-#                 "width": "100%",
-#                 "border-bottom-style": "solid",
-#                 "border-bottom-color": "black",
-#             },
-#         ),
-#         dbc.Row(
-#             [
-#                 dbc.Col(
-#                     [
-
-#                     ],
-#                     md=2,
-#                     style={"border-width": "1", "width": "100%"},
-#                 ),
-#                 dbc.Col(
-#                     [
-#                         html.H5("Date Range Slider"),
-#                         dcc.RangeSlider(
-#                             id="date_slider",
-#                             min=daterange[0],
-#                             max=daterange[-1],
-#                             value=[daterange[0], daterange[-1]],
-#                             step=1,
-#                             # tooltip={"placement": "bottom", "always_visible": True},
-#                             marks=marks_display,
-#                         ),
-#                     ],
-#                     style={"border-width": "0"},
-#                 ),  ## 'border-width': '1', 'width': '100%', 'border-style': 'solid', 'border-color': 'black'
-#             ],
-#             style={"border-width": "0", "width": "100%"},
-#         ),
-#         dbc.Row(
-#             [
-#                 dbc.Col(
-#                     [
-#                         html.H5("Linear/Log Selector"),
-#                         dcc.RadioItems(
-#                             id="scale_radio",
-#                             options=[
-#                                 {"label": "Linear", "value": "linear"},
-#                                 {"label": "Log", "value": "symlog"},
-#                             ],
-#                             value="linear",
-#                         ),
-
-#                         html.H5("Country Selector"),
-#                         dcc.Dropdown(
-#                             id="country_select",
-#                             multi=True,
-#                             options=[
-#                                 {"label": x, "value": x}
-#                                 for x in df.location.sort_values().unique()
-#                             ],
-#                             value=[
-#                                 "Canada",
-#                                 "World",
-#                             ],
-#                         ),
-#                     ],
-#                     md=2,
-#                 ),
-#                 dbc.Col(
-#                     [
-#                         dcc.Tabs(
-#                             [
-#                                 dcc.Tab(
-#                                     dbc.Col(
-#                                         [
-#                                             feature_dropdown,
-#                                             dcc.Graph(
-#                                                 id="map_plot",
-#                                                 figure={},
-#                                                 style={"height": "70vh"},
-#                                             )
-#                                         ]
-#                                     ),
-#                                     label="World Map",
-#                                 ),
-#                                 dcc.Tab(
-#                                     dbc.Col(
-#                                         [
-#                                             feature_dropdown_2,
-#                                             html.Iframe(
-#                                                 id="line_plot",
-#                                                 style={
-#                                                     "border-width": "0",
-#                                                     "width": "100vh",
-#                                                     "height": "70vh",
-#                                                 },
-#                                             ),
-#                                         ]
-#                                     ),
-#                                     label="COVID-19 Indicators",
-#                                 ),
-#                                 dcc.Tab(
-#                                     label="Vaccination Indicators",
-#                                 ),
-#                             ],
-#                             style={"width": "100%"},
-#                         ),
-#                         html.H5("Date selected"),
-#                         html.Div(id="date_from_display"),
-#                         html.Div(id="date_to_display"),
-#                     ],
-#                     style={
-#                         "border-width": "0",
-#                         "width": "90%",
-#                         "backgroundColor": "white",
-#                         "float": "right",
-#                     },
-#                 ),
-#             ]
-#         ),
-#     ],
-#     style={
-#         "border-width": "0",
-#         "backgroundColor": "#72a0c1",
-#         "min-height": "100vh",
-#         "min-width": "1300px",
-#     },
-# )
 
 # Map plot sample
 @app.callback(
