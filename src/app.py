@@ -454,7 +454,7 @@ app.layout = dbc.Container(
                             ),
                             html.B([
                                 html.Span(
-                                    "Data Slider",
+                                    "Date Slider",
                                     id="tooltip-target2",
                                     style={"textDecoration": "underline", "cursor": "pointer"},
                                     ), ]
