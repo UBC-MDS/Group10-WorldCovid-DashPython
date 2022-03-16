@@ -721,6 +721,7 @@ def plot_map(ycol, countries, daterange):
         geo=dict(
             showframe=False, showcoastlines=False, projection_type="equirectangular"
         ),
+        legend={"title_text": ""}
     )
 
     fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 50
@@ -799,13 +800,13 @@ def plot_map_line_chart(ycol, countries, daterange, scale, points_option= False)
     )
 
     if points_option == False:
-        chart = line.properties(width=800, height=400, title=f"Country Data for {ycol}").add_selection(click).interactive().configure_title(
+        chart = line.properties(width=800, height=400).add_selection(click).interactive().configure_title(
                 fontSize=15,
                 anchor="start",
             ).configure_legend(title=None)
 
     elif points_option == True:
-        chart = alt.layer(points, line).properties(width=800, height=400, title=f"Country Data for {ycol}").add_selection(click).interactive().configure_title(
+        chart = alt.layer(points, line).properties(width=800, height=400).add_selection(click).interactive().configure_title(
                 fontSize=15,
                 anchor="start",
             ).configure_legend(title=None)
