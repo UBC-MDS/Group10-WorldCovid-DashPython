@@ -281,8 +281,9 @@ line_tab = dbc.Row(
                     " ",
                 ),
                 html.B([
+                    "Data Scale ",
                 html.Span(
-                    "Data Scale",
+                    "(?)",
                     id="tooltip-target",
                     style={"textDecoration": "underline", "cursor": "pointer"},
                     ), ]
@@ -453,8 +454,9 @@ app.layout = dbc.Container(
                                 " ",
                             ),
                             html.B([
+                                "Date Slider ",
                                 html.Span(
-                                    "Date Slider",
+                                    "(?)",
                                     id="tooltip-target2",
                                     style={"textDecoration": "underline", "cursor": "pointer"},
                                     ), ]
