@@ -190,7 +190,7 @@ sidebar = dbc.Col(
                 "World COVID-19 Dashboard",
                 style={
                     "font": "Helvetica",
-                    "font-size": "25px",
+                    "font-size": "28px",
                     "text-align": "center",
                 },
             ),
@@ -208,7 +208,7 @@ sidebar = dbc.Col(
                     html.Span(
                         "(?)",
                         id="tooltip-target-country",
-                        style={"textDecoration": "underline", "cursor": "pointer"},
+                        style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
                     ),
                 ]
             ),
@@ -223,9 +223,10 @@ sidebar = dbc.Col(
             html.Br(),
             html.Hr(),
             html.B("Data Source"),
+            html.P(" "),
             html.P(
                 "The World COVID-19 Dashboard uses a colection of COVID-19 data maintained by Our World in Data",
-                style={"text-align": "left"},
+                style={"text-align": "left", "font-size": "15px"},
             ),
             html.Div(
                 [
@@ -235,7 +236,7 @@ sidebar = dbc.Col(
                     """
                     ),
                 ],
-                style={"text-align": "left"},
+                style={"text-align": "left", "font-size": "15px"},
             ),
             html.Div(
                 [
@@ -245,7 +246,7 @@ sidebar = dbc.Col(
                     """
                     ),
                 ],
-                style={"text-align": "left"},
+                style={"text-align": "left", "font-size": "15px"},
             ),
         ],
     ),
@@ -276,7 +277,7 @@ map_tab = (
                         html.Span(
                             "(?)",
                             id="tooltip-target_3",
-                            style={"textDecoration": "underline", "cursor": "pointer"},
+                            style={"textDecoration": "underline", "cursor": "pointer","font-size": "10px", "vertical-align":"top"},
                         ),
                     ]
                 ),
@@ -328,7 +329,7 @@ line_tab = dbc.Row(
                         html.Span(
                             "(?)",
                             id="tooltip-target_4",
-                            style={"textDecoration": "underline", "cursor": "pointer"},
+                            style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
                         ),
                     ]
                 ),
@@ -349,7 +350,7 @@ line_tab = dbc.Row(
                         html.Span(
                             "(?)",
                             id="tooltip-target",
-                            style={"textDecoration": "underline", "cursor": "pointer"},
+                            style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
                         ),
                     ]
                 ),
@@ -367,7 +368,7 @@ line_tab = dbc.Row(
                         html.Span(
                             "(?)",
                             id="tooltip-target_2",
-                            style={"textDecoration": "underline", "cursor": "pointer"},
+                            style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
                         ),
                     ]
                 ),
@@ -410,7 +411,7 @@ charts_tab = (
                     html.Span(
                         "(?)",
                         id="tooltip-target-line",
-                        style={"textDecoration": "underline", "cursor": "pointer"},
+                        style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
                     ),
                 ]
             ),
@@ -575,6 +576,8 @@ app.layout = dbc.Container([
                                         style={
                                             "textDecoration": "underline",
                                             "cursor": "pointer",
+                                            "font-size": "10px", 
+                                            "vertical-align":"top"
                                         },
                                     ),
                                 ]
@@ -622,7 +625,7 @@ app.layout = dbc.Container([
     ),
     dbc.Row([
 
-        html.P("The World COVID-19 Dashboard was created and maintained by Adam Morphy, Kingslin Lv, Kristin Bunyan, and Thomas Siu.")
+        dcc.Markdown("The World COVID-19 Dashboard was created and maintained by [Adam Morphy](https://github.com/adammorphy), [Kingslin Lv](https://github.com/Kingslin0810), [Kristin Bunyan](https://github.com/khbunyan), and [Thomas Siu](https://github.com/thomassiu).")
 
     ], style={"height": "60px", "background-color": "#e5e5e5", "font-size": "14px", "padding-left":"20px", "padding-top":"20px"})],
     fluid=True,
