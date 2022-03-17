@@ -156,7 +156,6 @@ points_option = dbc.RadioItems(
 )
 
 
-
 # Data scale radio button for line charts in Charts tab
 scale_charts_radio = dbc.RadioItems(
     options=[
@@ -203,9 +202,19 @@ sidebar = dbc.Col(
             ),
             html.Hr(),
             html.Br(),
-            html.B("Country Filter"),
-            html.P(
-                "Use this filter to add or remove a country from the analysis",
+            html.B(
+                [
+                    "Country Filter ",
+                    html.Span(
+                        "(?)",
+                        id="tooltip-target-country",
+                        style={"textDecoration": "underline", "cursor": "pointer"},
+                    ),
+                ]
+            ),
+            dbc.Tooltip(
+                "Use this filter to add or remove a country from the analysis. If there are no countries selected, it returns data for all countries",
+                target="tooltip-target-country",
             ),
             html.Br(),
             html.Br(),
@@ -271,12 +280,21 @@ map_tab = (
         ]
     ),
     dbc.Row(
-        dcc.Loading(
-            dcc.Graph(
-                id="map_plot",
-                style={"height": "70vh"},
+        [
+            html.P(" "),
+            dbc.Col(html.P(" "), width=1),
+            dbc.Col(
+                dbc.Toast(
+                    dcc.Loading(
+                        dcc.Graph(
+                            id="map_plot",
+                            style={"height": "60vh"},
+                        ),
+                    ),
+                    style={"width": "95%"},
+                ),
             ),
-        )
+        ]
     ),
 )
 
@@ -303,39 +321,44 @@ line_tab = dbc.Row(
                 html.P(
                     " ",
                 ),
-                html.B([
-                    "Data Scale ",
-                html.Span(
-                    "(?)",
-                    id="tooltip-target",
-                    style={"textDecoration": "underline", "cursor": "pointer"},
-                    ), ]
-                    ),
+                html.B(
+                    [
+                        "Data Scale ",
+                        html.Span(
+                            "(?)",
+                            id="tooltip-target",
+                            style={"textDecoration": "underline", "cursor": "pointer"},
+                        ),
+                    ]
+                ),
                 dbc.Tooltip(
                     "Use these buttons to change the data scale. Linear: shows the absolute change in value over time. Log: shows the relative change in value over time.",
                     target="tooltip-target",
-                    ),
+                ),
                 scale_map_line_radio,
                 html.P(
                     " ",
                 ),
                 html.B("Add Points"),
                 points_option,
-
             ],
-            width=1,
+            width=2,
         ),
         dbc.Col(
-            dcc.Loading(
-                html.Iframe(
-                    id="line_chart",
-                    style={
-                        "height": "70vh",
-                        "width": "100%",
-                        "textAlign": "center",
-                    },
+            dbc.Toast(
+                dcc.Loading(
+                    html.Iframe(
+                        id="line_chart",
+                        style={
+                            "height": "70vh",
+                            "width": "100%",
+                            "textAlign": "center",
+                        },
+                    ),
                 ),
-            )
+                style={"height": "550px", "width": "950px"},
+            ),
+            style={"height": "900px"},
         ),
     ]
 )
@@ -346,7 +369,20 @@ charts_tab = (
     dbc.Row(
         [
             html.P(" "),
-            html.B("Data Scale:"),
+            html.B(
+                [
+                    "Data Scale ",
+                    html.Span(
+                        "(?)",
+                        id="tooltip-target-line",
+                        style={"textDecoration": "underline", "cursor": "pointer"},
+                    ),
+                ]
+            ),
+            dbc.Tooltip(
+                "Use these buttons to change the data scale. Linear: shows the absolute change in value over time. Log: shows the relative change in value over time.",
+                target="tooltip-target-line",
+            ),
             html.P(
                 "Use the radio buttons below to change the data in the visualizations to a linear or log scale.",
             ),
@@ -355,105 +391,127 @@ charts_tab = (
             html.P(" "),
             html.Br(),
             html.Br(),
-            dbc.Col(
+            dbc.Row(
                 [
-                    html.P(
-                        "Total Vaccinations",
-                        style={"font-size": "25px"},
+                    dbc.Col(
+                        [
+                            html.P(
+                                "Total Vaccinations",
+                                style={"font-size": "25px"},
+                            ),
+                            html.P(
+                                "Shows the total number of people vaccinated for the selected countries, over the date range selected by the slider above.",
+                            ),
+                            dbc.Toast(
+                                dcc.Loading(
+                                    html.Iframe(
+                                        id="chart_1",
+                                        style={
+                                            "display": "block",
+                                            "overflow": " hidden",
+                                            # "margin": "auto",
+                                            "border-width": "0",
+                                            "width": "550px",
+                                            "height": "500px",
+                                        },
+                                    ),
+                                ),
+                                style={"width": "550px", "height": "480px"},
+                            ),
+                        ],
+                        #    width=5,
                     ),
-                    html.P(
-                        "Shows the total number of people vaccinated for the selected countries, over the date range selected by the slider above.",
+                    dbc.Col(
+                        [
+                            html.P(
+                                "New Vaccinations",
+                                style={"font-size": "25px"},
+                            ),
+                            html.P(
+                                "Shows the number of people newly vaccinated for the selected countries, over the date range selected by the slider above.",
+                            ),
+                            dbc.Toast(
+                                dcc.Loading(
+                                    html.Iframe(
+                                        id="chart_2",
+                                        style={
+                                            "display": "block",
+                                            "overflow": " hidden",
+                                            # "margin": "auto",
+                                            "border-width": "0",
+                                            "width": "550px",
+                                            "height": "500px",
+                                        },
+                                    ),
+                                ),
+                                style={"width": "550px", "height": "480px"},
+                            ),
+                        ],
+                        #    width=5,
                     ),
-                    dcc.Loading(
-                        html.Iframe(
-                            id="chart_1",
-                            style={
-                                "display": "block",
-                                "overflow": " hidden",
-                                # "margin": "auto",
-                                "border-width": "0",
-                                "width": "550px",
-                                "height": "500px",
-                            },
-                        ),
-                    ),
-                ],
-                #    width=5,
+                ]
             ),
-            dbc.Col(
+            dbc.Row([html.P(" "), html.P(" ")]),
+            dbc.Row(
                 [
-                    html.P(
-                        "New Vaccinations",
-                        style={"font-size": "25px"},
+                    dbc.Col(
+                        [
+                            html.P(
+                                "Daily ICU Hospitalizations",
+                                style={"font-size": "25px"},
+                            ),
+                            html.P(
+                                "Shows the daily number of people per million admitted to the ICU for the selected countries, over the date range selected by the slider above.",
+                            ),
+                            dbc.Toast(
+                                dcc.Loading(
+                                    html.Iframe(
+                                        id="chart_3",
+                                        style={
+                                            "display": "block",
+                                            "overflow": " hidden",
+                                            # "margin": "auto",
+                                            "border-width": "0",
+                                            "width": "550px",
+                                            "height": "500px",
+                                        },
+                                    ),
+                                ),
+                                style={"width": "550px", "height": "480px"},
+                            ),
+                        ],
+                        #  width=4,
                     ),
-                    html.P(
-                        "Shows the number of people newly vaccinated for the selected countries, over the date range selected by the slider above.",
+                    dbc.Col(
+                        [
+                            html.P(
+                                "Daily Hospitalizations",
+                                style={"font-size": "25px"},
+                            ),
+                            html.P(
+                                "Shows the daily number of people per million admitted to the hospital for the selected countries, over the date range selected by the slider above.",
+                            ),
+                            dbc.Toast(
+                                dcc.Loading(
+                                    html.Iframe(
+                                        id="chart_4",
+                                        style={
+                                            "display": "block",
+                                            "overflow": " hidden",
+                                            # "margin": "auto",
+                                            "border-width": "0",
+                                            "width": "550px",
+                                            "height": "500px",
+                                        },
+                                    ),
+                                ),
+                                style={"width": "550px", "height": "480px"},
+                            ),
+                        ],
+                        # width=5,
+                        style={"height": "700px"},
                     ),
-                    dcc.Loading(
-                        html.Iframe(
-                            id="chart_2",
-                            style={
-                                "display": "block",
-                                "overflow": " hidden",
-                                # "margin": "auto",
-                                "border-width": "0",
-                                "width": "550px",
-                                "height": "500px",
-                            },
-                        ),
-                    ),
-                ],
-                #    width=5,
-            ),
-            dbc.Col(
-                [
-                    html.P(
-                        "Daily ICU Hospitalizations",
-                        style={"font-size": "25px"},
-                    ),
-                    html.P(
-                        "Shows the daily number of people per million admitted to the ICU for the selected countries, over the date range selected by the slider above.",
-                    ),
-                    dcc.Loading(
-                        html.Iframe(
-                            id="chart_3",
-                            style={
-                                "display": "block",
-                                "overflow": " hidden",
-                                # "margin": "auto",
-                                "border-width": "0",
-                                "width": "550px",
-                                "height": "500px",
-                            },
-                        ),
-                    ),
-                ],
-                #  width=4,
-            ),
-            dbc.Col(
-                [
-                    html.P(
-                        "Daily Hospitalizations",
-                        style={"font-size": "25px"},
-                    ),
-                    html.P(
-                        "Shows the daily number of people per million admitted to the hospital for the selected countries, over the date range selected by the slider above.",
-                    ),
-                    dcc.Loading(
-                        html.Iframe(
-                            id="chart_4",
-                            style={
-                                "display": "block",
-                                "overflow": " hidden",
-                                # "margin": "auto",
-                                "border-width": "0",
-                                "width": "550px",
-                                "height": "500px",
-                            },
-                        ),
-                    ),
-                ],
-                # width=5,
+                ]
             ),
         ]
     ),
@@ -476,18 +534,23 @@ app.layout = dbc.Container(
                             html.P(
                                 " ",
                             ),
-                            html.B([
-                                "Date Slider ",
-                                html.Span(
-                                    "(?)",
-                                    id="tooltip-target2",
-                                    style={"textDecoration": "underline", "cursor": "pointer"},
-                                    ), ]
+                            html.B(
+                                [
+                                    "Date Slider ",
+                                    html.Span(
+                                        "(?)",
+                                        id="tooltip-target2",
+                                        style={
+                                            "textDecoration": "underline",
+                                            "cursor": "pointer",
+                                        },
                                     ),
+                                ]
+                            ),
                             dbc.Tooltip(
-                                    "Use this slider to adjust the date range of the visualizations. The dates displayed below, are the boundaries of the timeline.",
-                                     target="tooltip-target2",
-                                    ),
+                                "Use this slider to adjust the date range of the visualizations. The dates displayed below, are the boundaries of the timeline.",
+                                target="tooltip-target2",
+                            ),
                             html.P(
                                 id="date_display",
                             ),
@@ -562,7 +625,7 @@ def plot_map(ycol, countries, daterange):
         animation_frame="date_str",
         animation_group=ycol,
         color_continuous_scale=px.colors.sequential.deep,
-        labels={ycol: " "}
+        labels={ycol: " "},
     )
 
     fig.update_layout(
@@ -588,7 +651,7 @@ def plot_map(ycol, countries, daterange):
         Input("points_option", "value"),
     ],
 )
-def plot_map_line_chart(ycol, countries, daterange, scale, points_option= False):
+def plot_map_line_chart(ycol, countries, daterange, scale, points_option=False):
 
     if daterange is None:
         daterange.append(0)
@@ -621,17 +684,26 @@ def plot_map_line_chart(ycol, countries, daterange, scale, points_option= False)
             ),
             x="date",
             tooltip=["location", alt.Tooltip(ycol, title="count")],
-            color=alt.Color("location"),
+            color=alt.Color(
+                "location",
+                legend=alt.Legend(
+                    title="",
+                    orient="none",
+                    direction="horizontal",
+                    legendX=0,
+                    legendY=-50,
+                    columns=4,
+                ),
+            ),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
     )
-
 
     chart = None
 
     points = (
         alt.Chart(filter_df)
-        .mark_circle(size = 5, opacity = 0.4)
+        .mark_circle(size=5, opacity=0.4)
         .encode(
             y=alt.Y(
                 "count:Q",
@@ -643,21 +715,32 @@ def plot_map_line_chart(ycol, countries, daterange, scale, points_option= False)
             color=alt.Color("location"),
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
-
     )
 
     if points_option == False:
-        chart = line.properties(width=800, height=400).add_selection(click).interactive().configure_title(
+        chart = (
+            line.properties(width=800, height=400)
+            .add_selection(click)
+            .interactive()
+            .configure_title(
                 fontSize=15,
                 anchor="start",
-            ).configure_legend(title=None)
+            )
+            .configure_legend(title=None)
+        )
 
     elif points_option == True:
-        chart = alt.layer(points, line).properties(width=800, height=400).add_selection(click).interactive().configure_title(
+        chart = (
+            alt.layer(points, line)
+            .properties(width=800, height=400)
+            .add_selection(click)
+            .interactive()
+            .configure_title(
                 fontSize=15,
                 anchor="start",
-            ).configure_legend(title=None)
-
+            )
+            .configure_legend(title=None)
+        )
 
     return chart.to_html()
 
@@ -724,7 +807,7 @@ def plot_chart_1(countries, daterange, scale):
             color=alt.Color(
                 "location",
                 legend=alt.Legend(
-                    title="Country",
+                    title="",
                     orient="none",
                     direction="horizontal",
                     legendX=0,
@@ -735,7 +818,7 @@ def plot_chart_1(countries, daterange, scale):
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(
-            width=450,
+            width=400,
             height=300,  # title=f"Country Data for people fully vaccinated"
         )
         .add_selection(click)
@@ -797,7 +880,7 @@ def plot_chart_2(countries, daterange, scale):
             color=alt.Color(
                 "location",
                 legend=alt.Legend(
-                    title="Country",
+                    title="",
                     orient="none",
                     direction="horizontal",
                     legendX=0,
@@ -808,7 +891,7 @@ def plot_chart_2(countries, daterange, scale):
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(
-            width=450,
+            width=400,
             height=300,  # title=f"Country Data for people newly vaccinated"
         )
         .add_selection(click)
@@ -872,7 +955,7 @@ def plot_chart_3(countries, daterange, scale):
             color=alt.Color(
                 "location",
                 legend=alt.Legend(
-                    title="Country",
+                    title="",
                     orient="none",
                     direction="horizontal",
                     legendX=0,
@@ -883,7 +966,7 @@ def plot_chart_3(countries, daterange, scale):
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(
-            width=450,
+            width=400,
             height=300,
             # title=f"Country Data for ICU patients per million people",
         )
@@ -946,7 +1029,7 @@ def plot_chart_4(countries, daterange, scale):
             color=alt.Color(
                 "location",
                 legend=alt.Legend(
-                    title="Country",
+                    title="",
                     orient="none",
                     direction="horizontal",
                     legendX=0,
@@ -957,7 +1040,7 @@ def plot_chart_4(countries, daterange, scale):
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
         .properties(
-            width=450,
+            width=400,
             height=300,
             # title=f"Country Data for hospitalized patients per million people",
         )
