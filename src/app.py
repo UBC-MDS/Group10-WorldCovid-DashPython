@@ -190,7 +190,7 @@ sidebar = dbc.Col(
                 "World COVID-19 Dashboard",
                 style={
                     "font": "Helvetica",
-                    "font-size": "25px",
+                    "font-size": "28px",
                     "text-align": "center",
                 },
             ),
@@ -208,7 +208,7 @@ sidebar = dbc.Col(
                     html.Span(
                         "(?)",
                         id="tooltip-target-country",
-                        style={"textDecoration": "underline", "cursor": "pointer"},
+                        style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
                     ),
                 ]
             ),
@@ -222,30 +222,31 @@ sidebar = dbc.Col(
             html.Hr(),
             html.Br(),
             html.Hr(),
-            html.B("Disclaimer"),
+            html.B("Data Source"),
+            html.P(" "),
             html.P(
-                "The World COVID-19 Dashboard was created by Adam Morphy, Kingslin Lv, Kristin Bunyan, and Thomas Siu.",
-                style={"text-align": "left"},
+                "The World COVID-19 Dashboard uses a colection of COVID-19 data maintained by Our World in Data",
+                style={"text-align": "left", "font-size": "15px"},
             ),
             html.Div(
                 [
                     dcc.Markdown(
-                        """
-                    Source code is saved [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython).
+                    """
+                    Data source can be found [here](https://github.com/owid/covid-19-data/tree/master/public/data).
                     """
                     ),
                 ],
-                style={"text-align": "left"},
+                style={"text-align": "left", "font-size": "15px"},
             ),
             html.Div(
                 [
                     dcc.Markdown(
-                        """
-                    Data source is from [here](https://github.com/owid/covid-19-data/tree/master/public/data).
+                    """
+                    Source code can be found [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython).
                     """
                     ),
                 ],
-                style={"text-align": "left"},
+                style={"text-align": "left", "font-size": "15px"},
             ),
         ],
     ),
@@ -270,9 +271,19 @@ map_tab = (
             html.P(
                 "The map below depicts the selected COVID-19 indicator for the selected countries. Use the play button to animate the timeline of this indicator over the date range selected by the slider above.",
             ),
-            html.B("Indicator:"),
-            html.P(
-                "Select an indicator to explore on the map and line plot using the dropdown below.",
+            html.B(
+                    [
+                        "Indicator ",
+                        html.Span(
+                            "(?)",
+                            id="tooltip-target_3",
+                            style={"textDecoration": "underline", "cursor": "pointer","font-size": "10px", "vertical-align":"top"},
+                        ),
+                    ]
+                ),
+            dbc.Tooltip(
+                    "Select an indicator to explore on the map and line plot using the dropdown below.",
+                    target="tooltip-target_3",
             ),
             html.Br(),
             html.Br(),
@@ -294,6 +305,8 @@ map_tab = (
                     style={"width": "95%"},
                 ),
             ),
+            html.P(" "),
+            html.P(" ")
         ]
     ),
 )
@@ -310,9 +323,19 @@ line_tab = dbc.Row(
         html.P(
             "The line plot below depicts the selected COVID-19 indicator for the selected countries over the date range selected by the slider above. Click the legend to highlight particular countries.",
         ),
-        html.B("Indicator:"),
-        html.P(
-            "Select an indicator to explore on the line plot using the dropdown below.",
+        html.B(
+                    [
+                        "Indicator ",
+                        html.Span(
+                            "(?)",
+                            id="tooltip-target_4",
+                            style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
+                        ),
+                    ]
+                ),
+        dbc.Tooltip(
+            "Select an indicator to explore on the map and line plot using the dropdown below.",
+            target="tooltip-target_4",
         ),
         feature_dropdown2,
         html.P(" "),
@@ -327,7 +350,7 @@ line_tab = dbc.Row(
                         html.Span(
                             "(?)",
                             id="tooltip-target",
-                            style={"textDecoration": "underline", "cursor": "pointer"},
+                            style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
                         ),
                     ]
                 ),
@@ -339,7 +362,20 @@ line_tab = dbc.Row(
                 html.P(
                     " ",
                 ),
-                html.B("Add Points"),
+                html.B(
+                    [
+                        "Add Points ",
+                        html.Span(
+                            "(?)",
+                            id="tooltip-target_2",
+                            style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
+                        ),
+                    ]
+                ),
+                dbc.Tooltip(
+                    "Use these buttons to add specific data points to the plot, in addition to the rolling mean",
+                    target="tooltip-target_2",
+                ),
                 points_option,
             ],
             width=2,
@@ -357,8 +393,8 @@ line_tab = dbc.Row(
                     ),
                 ),
                 style={"height": "550px", "width": "950px"},
-            ),
-            style={"height": "900px"},
+            ), 
+            style={"height": "600px"}
         ),
     ]
 )
@@ -375,16 +411,13 @@ charts_tab = (
                     html.Span(
                         "(?)",
                         id="tooltip-target-line",
-                        style={"textDecoration": "underline", "cursor": "pointer"},
+                        style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
                     ),
                 ]
             ),
             dbc.Tooltip(
                 "Use these buttons to change the data scale. Linear: shows the absolute change in value over time. Log: shows the relative change in value over time.",
                 target="tooltip-target-line",
-            ),
-            html.P(
-                "Use the radio buttons below to change the data in the visualizations to a linear or log scale.",
             ),
             html.Br(),
             scale_charts_radio,
@@ -445,7 +478,7 @@ charts_tab = (
                                     ),
                                 ),
                                 style={"width": "550px", "height": "480px"},
-                            ),
+                            ),  
                         ],
                         #    width=5,
                     ),
@@ -523,7 +556,7 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 app.title = "World COVID-19 Dashboard"
 server = app.server
 
-app.layout = dbc.Container(
+app.layout = dbc.Container([
     dbc.Row(
         [
             sidebar,
@@ -543,6 +576,8 @@ app.layout = dbc.Container(
                                         style={
                                             "textDecoration": "underline",
                                             "cursor": "pointer",
+                                            "font-size": "10px", 
+                                            "vertical-align":"top"
                                         },
                                     ),
                                 ]
@@ -588,6 +623,11 @@ app.layout = dbc.Container(
             ),
         ]
     ),
+    dbc.Row([
+
+        dcc.Markdown("The World COVID-19 Dashboard was created and maintained by [Adam Morphy](https://github.com/adammorphy), [Kingslin Lv](https://github.com/Kingslin0810), [Kristin Bunyan](https://github.com/khbunyan), and [Thomas Siu](https://github.com/thomassiu).")
+
+    ], style={"height": "60px", "background-color": "#e5e5e5", "font-size": "14px", "padding-left":"20px", "padding-top":"20px"})],
     fluid=True,
 )
 
