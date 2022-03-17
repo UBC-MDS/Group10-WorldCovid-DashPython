@@ -62,7 +62,7 @@ def get_data(date_from=None, date_to=None, location=None):
     return df.sort_values("date")
 
 
-def filter_data(df, date_from=None, date_to=None, countries="all"):
+def filter_data(df, date_from=None, date_to=None, countries=[]):
     """filter covid data
     Filter covid data in pandas dataframe format
     with the time periods and countries provided.
@@ -101,17 +101,10 @@ def filter_data(df, date_from=None, date_to=None, countries="all"):
     if date_to is None:
         date_to = df["date"].max()
 
-    if countries is None:
-        countries = [
-            "Canada",
-            "United States",
-            "Germany",
-            "United Kingdom",
-            "Singapore",
-        ]
-    elif "all" not in countries:
+    if len(countries) > 0:
         query += " and location in @countries"
-
+    print(len(countries))
+    print(query)
     df = df.query(query)
 
     return df.copy()
