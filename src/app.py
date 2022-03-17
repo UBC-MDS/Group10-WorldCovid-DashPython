@@ -270,9 +270,19 @@ map_tab = (
             html.P(
                 "The map below depicts the selected COVID-19 indicator for the selected countries. Use the play button to animate the timeline of this indicator over the date range selected by the slider above.",
             ),
-            html.B("Indicator:"),
-            html.P(
-                "Select an indicator to explore on the map and line plot using the dropdown below.",
+            html.B(
+                    [
+                        "Indicator ",
+                        html.Span(
+                            "(?)",
+                            id="tooltip-target_3",
+                            style={"textDecoration": "underline", "cursor": "pointer"},
+                        ),
+                    ]
+                ),
+            dbc.Tooltip(
+                    "Select an indicator to explore on the map and line plot using the dropdown below.",
+                    target="tooltip-target_3",
             ),
             html.Br(),
             html.Br(),
@@ -310,9 +320,19 @@ line_tab = dbc.Row(
         html.P(
             "The line plot below depicts the selected COVID-19 indicator for the selected countries over the date range selected by the slider above. Click the legend to highlight particular countries.",
         ),
-        html.B("Indicator:"),
-        html.P(
-            "Select an indicator to explore on the line plot using the dropdown below.",
+        html.B(
+                    [
+                        "Indicator ",
+                        html.Span(
+                            "(?)",
+                            id="tooltip-target_4",
+                            style={"textDecoration": "underline", "cursor": "pointer"},
+                        ),
+                    ]
+                ),
+        dbc.Tooltip(
+            "Select an indicator to explore on the map and line plot using the dropdown below.",
+            target="tooltip-target_4",
         ),
         feature_dropdown2,
         html.P(" "),
@@ -339,7 +359,20 @@ line_tab = dbc.Row(
                 html.P(
                     " ",
                 ),
-                html.B("Add Points"),
+                html.B(
+                    [
+                        "Add Points ",
+                        html.Span(
+                            "(?)",
+                            id="tooltip-target_2",
+                            style={"textDecoration": "underline", "cursor": "pointer"},
+                        ),
+                    ]
+                ),
+                dbc.Tooltip(
+                    "Use these buttons to add specific data points to the plot, in addition to the rolling mean",
+                    target="tooltip-target_2",
+                ),
                 points_option,
             ],
             width=2,
