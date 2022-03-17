@@ -720,6 +720,7 @@ def plot_map_line_chart(ycol, countries, daterange, scale, points_option=False):
             y=alt.Y(
                 "rolling_mean:Q",
                 scale=alt.Scale(domainMin=0, type=scale),
+                title="",
             ),
             x="date",
             tooltip=["location", alt.Tooltip(ycol, title="count")],
@@ -747,6 +748,7 @@ def plot_map_line_chart(ycol, countries, daterange, scale, points_option=False):
             y=alt.Y(
                 "count:Q",
                 scale=alt.Scale(domainMin=0, type=scale),
+                title="",
             ),
             x="date",
             tooltip=["location", alt.Tooltip(ycol, title="count")],
