@@ -222,16 +222,16 @@ sidebar = dbc.Col(
             html.Hr(),
             html.Br(),
             html.Hr(),
-            html.B("Disclaimer"),
+            html.B("Data Source"),
             html.P(
-                "The World COVID-19 Dashboard was created by Adam Morphy, Kingslin Lv, Kristin Bunyan, and Thomas Siu.",
+                "The World COVID-19 Dashboard uses a colection of COVID-19 data maintained by Our World in Data",
                 style={"text-align": "left"},
             ),
             html.Div(
                 [
                     dcc.Markdown(
-                        """
-                    Source code is saved [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython).
+                    """
+                    Data source can be found [here](https://github.com/owid/covid-19-data/tree/master/public/data).
                     """
                     ),
                 ],
@@ -240,8 +240,8 @@ sidebar = dbc.Col(
             html.Div(
                 [
                     dcc.Markdown(
-                        """
-                    Data source is from [here](https://github.com/owid/covid-19-data/tree/master/public/data).
+                    """
+                    Source code can be found [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython).
                     """
                     ),
                 ],
@@ -304,6 +304,8 @@ map_tab = (
                     style={"width": "95%"},
                 ),
             ),
+            html.P(" "),
+            html.P(" ")
         ]
     ),
 )
@@ -390,8 +392,8 @@ line_tab = dbc.Row(
                     ),
                 ),
                 style={"height": "550px", "width": "950px"},
-            ),
-            style={"height": "900px"},
+            ), 
+            style={"height": "600px"}
         ),
     ]
 )
@@ -475,7 +477,7 @@ charts_tab = (
                                     ),
                                 ),
                                 style={"width": "550px", "height": "480px"},
-                            ),
+                            ),  
                         ],
                         #    width=5,
                     ),
@@ -553,7 +555,7 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 app.title = "World COVID-19 Dashboard"
 server = app.server
 
-app.layout = dbc.Container(
+app.layout = dbc.Container([
     dbc.Row(
         [
             sidebar,
@@ -618,6 +620,11 @@ app.layout = dbc.Container(
             ),
         ]
     ),
+    dbc.Row([
+
+        html.P("The World COVID-19 Dashboard was created and maintained by Adam Morphy, Kingslin Lv, Kristin Bunyan, and Thomas Siu.")
+
+    ], style={"height": "60px", "background-color": "#e5e5e5", "font-size": "14px", "padding-left":"20px", "padding-top":"20px"})],
     fluid=True,
 )
 
