@@ -383,9 +383,6 @@ charts_tab = (
                 "Use these buttons to change the data scale. Linear: shows the absolute change in value over time. Log: shows the relative change in value over time.",
                 target="tooltip-target-line",
             ),
-            html.P(
-                "Use the radio buttons below to change the data in the visualizations to a linear or log scale.",
-            ),
             html.Br(),
             scale_charts_radio,
             html.P(" "),
