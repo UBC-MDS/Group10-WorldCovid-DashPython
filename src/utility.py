@@ -94,6 +94,14 @@ def filter_data(df, date_from=None, date_to=None, countries=[]):
     """
 
     query = "@date_from <= date <= @date_to"
+    continent_list = [
+        "Africa",
+        "Asia",
+        "Europe",
+        "North America",
+        "Oceania",
+        "South America",
+    ]
 
     if date_from is None:
         date_from = df["date"].min()
@@ -102,9 +110,19 @@ def filter_data(df, date_from=None, date_to=None, countries=[]):
         date_to = df["date"].max()
 
     if len(countries) > 0:
-        query += " and location in @countries"
-    print(len(countries))
-    print(query)
+
+        continents = list(set(continent_list) & set(countries))
+        countries = list(set(countries) - set(continents))
+
+        if len(countries) > 0 and len(continents) == 0:
+            query += " and location in @countries"
+
+        elif len(countries) == 0 and len(continents) > 0:
+            query += " and continent in @continents"
+
+        elif len(countries) > 0 and len(continents) > 0:
+            query += " and (location in @countries or continent in @continents)"
+
     df = df.query(query)
 
     return df.copy()
