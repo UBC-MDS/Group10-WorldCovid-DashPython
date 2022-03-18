@@ -208,7 +208,12 @@ sidebar = dbc.Col(
                     html.Span(
                         "(?)",
                         id="tooltip-target-country",
-                        style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
+                        style={
+                            "textDecoration": "underline",
+                            "cursor": "pointer",
+                            "font-size": "10px",
+                            "vertical-align": "top",
+                        },
                     ),
                 ]
             ),
@@ -231,7 +236,7 @@ sidebar = dbc.Col(
             html.Div(
                 [
                     dcc.Markdown(
-                    """
+                        """
                     Data source can be found [here](https://github.com/owid/covid-19-data/tree/master/public/data).
                     """
                     ),
@@ -241,7 +246,7 @@ sidebar = dbc.Col(
             html.Div(
                 [
                     dcc.Markdown(
-                    """
+                        """
                     Source code can be found [here](https://github.com/UBC-MDS/group10-worldcovid-dashpython).
                     """
                     ),
@@ -272,18 +277,23 @@ map_tab = (
                 "The map below depicts the selected COVID-19 indicator for the selected countries. Use the play button to animate the timeline of this indicator over the date range selected by the slider above.",
             ),
             html.B(
-                    [
-                        "Indicator ",
-                        html.Span(
-                            "(?)",
-                            id="tooltip-target_3",
-                            style={"textDecoration": "underline", "cursor": "pointer","font-size": "10px", "vertical-align":"top"},
-                        ),
-                    ]
-                ),
+                [
+                    "Indicator ",
+                    html.Span(
+                        "(?)",
+                        id="tooltip-target_3",
+                        style={
+                            "textDecoration": "underline",
+                            "cursor": "pointer",
+                            "font-size": "10px",
+                            "vertical-align": "top",
+                        },
+                    ),
+                ]
+            ),
             dbc.Tooltip(
-                    "Select an indicator to explore on the map and line plot using the dropdown below.",
-                    target="tooltip-target_3",
+                "Select an indicator to explore on the map and line plot using the dropdown below.",
+                target="tooltip-target_3",
             ),
             html.Br(),
             html.Br(),
@@ -306,7 +316,7 @@ map_tab = (
                 ),
             ),
             html.P(" "),
-            html.P(" ")
+            html.P(" "),
         ]
     ),
 )
@@ -324,15 +334,20 @@ line_tab = dbc.Row(
             "The line plot below depicts the selected COVID-19 indicator for the selected countries over the date range selected by the slider above. Click the legend to highlight particular countries.",
         ),
         html.B(
-                    [
-                        "Indicator ",
-                        html.Span(
-                            "(?)",
-                            id="tooltip-target_4",
-                            style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
-                        ),
-                    ]
+            [
+                "Indicator ",
+                html.Span(
+                    "(?)",
+                    id="tooltip-target_4",
+                    style={
+                        "textDecoration": "underline",
+                        "cursor": "pointer",
+                        "font-size": "10px",
+                        "vertical-align": "top",
+                    },
                 ),
+            ]
+        ),
         dbc.Tooltip(
             "Select an indicator to explore on the map and line plot using the dropdown below.",
             target="tooltip-target_4",
@@ -350,7 +365,12 @@ line_tab = dbc.Row(
                         html.Span(
                             "(?)",
                             id="tooltip-target",
-                            style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
+                            style={
+                                "textDecoration": "underline",
+                                "cursor": "pointer",
+                                "font-size": "10px",
+                                "vertical-align": "top",
+                            },
                         ),
                     ]
                 ),
@@ -368,7 +388,12 @@ line_tab = dbc.Row(
                         html.Span(
                             "(?)",
                             id="tooltip-target_2",
-                            style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
+                            style={
+                                "textDecoration": "underline",
+                                "cursor": "pointer",
+                                "font-size": "10px",
+                                "vertical-align": "top",
+                            },
                         ),
                     ]
                 ),
@@ -393,8 +418,8 @@ line_tab = dbc.Row(
                     ),
                 ),
                 style={"height": "550px", "width": "950px"},
-            ), 
-            style={"height": "600px"}
+            ),
+            style={"height": "600px"},
         ),
     ]
 )
@@ -411,7 +436,12 @@ charts_tab = (
                     html.Span(
                         "(?)",
                         id="tooltip-target-line",
-                        style={"textDecoration": "underline", "cursor": "pointer", "font-size": "10px", "vertical-align":"top"},
+                        style={
+                            "textDecoration": "underline",
+                            "cursor": "pointer",
+                            "font-size": "10px",
+                            "vertical-align": "top",
+                        },
                     ),
                 ]
             ),
@@ -478,7 +508,7 @@ charts_tab = (
                                     ),
                                 ),
                                 style={"width": "550px", "height": "480px"},
-                            ),  
+                            ),
                         ],
                         #    width=5,
                     ),
@@ -556,78 +586,89 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 app.title = "World COVID-19 Dashboard"
 server = app.server
 
-app.layout = dbc.Container([
-    dbc.Row(
-        [
-            sidebar,
-            dbc.Col(
-                [
-                    dbc.Row(
-                        [
-                            html.P(
-                                " ",
-                            ),
-                            html.B(
-                                [
-                                    "Date Slider ",
-                                    html.Span(
-                                        "(?)",
-                                        id="tooltip-target2",
-                                        style={
-                                            "textDecoration": "underline",
-                                            "cursor": "pointer",
-                                            "font-size": "10px", 
-                                            "vertical-align":"top"
-                                        },
-                                    ),
-                                ]
-                            ),
-                            dbc.Tooltip(
-                                "Use this slider to adjust the date range of the visualizations. The dates displayed below, are the boundaries of the timeline.",
-                                target="tooltip-target2",
-                            ),
-                            html.P(
-                                id="date_display",
-                            ),
-                            html.Br(),
-                            html.Br(),
-                            html.P(" "),
-                            date_slider,
-                            html.Br(),
-                            html.Br(),
-                            html.P(" "),
-                            dbc.Tabs(
-                                [
-                                    dbc.Tab(
-                                        map_tab,
-                                        label="Global COVID-19 Map",
-                                        tab_id="map-tab",
-                                    ),
-                                    dbc.Tab(
-                                        line_tab,
-                                        label="Global COVID-19 Plot",
-                                        tab_id="line-tab",
-                                    ),
-                                    dbc.Tab(
-                                        charts_tab,
-                                        label="Vaccination and Hospitalization Indicators",
-                                        tab_id="charts-tab",
-                                    ),
-                                ]
-                            ),
-                        ]
-                    )
-                ],
-                # style={"width": "80%"},
-                width=10,
-            ),
-        ]
-    ),
-    dbc.Row([
-
-        dcc.Markdown("The World COVID-19 Dashboard was created and maintained by [Adam Morphy](https://github.com/adammorphy), [Kingslin Lv](https://github.com/Kingslin0810), [Kristin Bunyan](https://github.com/khbunyan), and [Thomas Siu](https://github.com/thomassiu).")
-
-    ], style={"height": "60px", "background-color": "#e5e5e5", "font-size": "14px", "padding-left":"20px", "padding-top":"20px"})],
+app.layout = dbc.Container(
+    [
+        dbc.Row(
+            [
+                sidebar,
+                dbc.Col(
+                    [
+                        dbc.Row(
+                            [
+                                html.P(
+                                    " ",
+                                ),
+                                html.B(
+                                    [
+                                        "Date Slider ",
+                                        html.Span(
+                                            "(?)",
+                                            id="tooltip-target2",
+                                            style={
+                                                "textDecoration": "underline",
+                                                "cursor": "pointer",
+                                                "font-size": "10px",
+                                                "vertical-align": "top",
+                                            },
+                                        ),
+                                    ]
+                                ),
+                                dbc.Tooltip(
+                                    "Use this slider to adjust the date range of the visualizations. The dates displayed below, are the boundaries of the timeline.",
+                                    target="tooltip-target2",
+                                ),
+                                html.P(
+                                    id="date_display",
+                                ),
+                                html.Br(),
+                                html.Br(),
+                                html.P(" "),
+                                date_slider,
+                                html.Br(),
+                                html.Br(),
+                                html.P(" "),
+                                dbc.Tabs(
+                                    [
+                                        dbc.Tab(
+                                            map_tab,
+                                            label="Global COVID-19 Map",
+                                            tab_id="map-tab",
+                                        ),
+                                        dbc.Tab(
+                                            line_tab,
+                                            label="Global COVID-19 Plot",
+                                            tab_id="line-tab",
+                                        ),
+                                        dbc.Tab(
+                                            charts_tab,
+                                            label="Vaccination and Hospitalization Indicators",
+                                            tab_id="charts-tab",
+                                        ),
+                                    ]
+                                ),
+                            ]
+                        )
+                    ],
+                    # style={"width": "80%"},
+                    width=10,
+                ),
+            ]
+        ),
+        dbc.Row(
+            [
+                dcc.Markdown(
+                    "The World COVID-19 Dashboard was created and maintained by [Adam Morphy](https://github.com/adammorphy), [Kingslin Lv](https://github.com/Kingslin0810), [Kristin Bunyan](https://github.com/khbunyan), and [Thomas Siu](https://github.com/thomassiu)."
+                )
+            ],
+            style={
+                "height": "60px",
+                "background-color": "#e5e5e5",
+                "font-size": "14px",
+                "padding-left": "20px",
+                "padding-top": "20px",
+            },
+        ),
+    ],
     fluid=True,
 )
 
@@ -1096,4 +1137,4 @@ def plot_chart_4(countries, daterange, scale):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server()
